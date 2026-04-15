@@ -3,151 +3,916 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🎟️ Rifa — Família Queiroz | Viagem ao Encontro do Richard</title>
+<title>🎟️ Rifa — Família de Queiroz Rodrigues | Viagem ao Encontro do Richard</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Nunito:wght@400;600;700;900&display=swap" rel="stylesheet">
 <style>
-/* ... Mantive seus estilos originais e adicionei novos para o formulário ... */
-:root { --verde: #009c3b; --verde2: #007a2e; --amarelo: #FFDF00; --azul: #002776; --branco: #ffffff; --creme: #fffef5; --cinza: #f0efe8; --texto: #1a1a2e; --sombra: rgba(0,39,118,0.14); }
+:root {
+  --verde:   #009c3b;
+  --verde2:  #007a2e;
+  --amarelo: #FFDF00;
+  --azul:    #002776;
+  --branco:  #ffffff;
+  --creme:   #fffef5;
+  --cinza:   #f0efe8;
+  --texto:   #1a1a2e;
+  --sombra:  rgba(0,39,118,0.14);
+}
 * { margin:0; padding:0; box-sizing:border-box; }
-body { font-family: 'Nunito', sans-serif; background: var(--creme); color: var(--texto); overflow-x: hidden; }
-.hero { background: linear-gradient(160deg, var(--azul) 0%, #001850 100%); padding: 60px 24px; text-align: center; color: white; }
-.container { max-width: 860px; margin: 0 auto; padding: 0 20px; }
-.secao-label { display: inline-block; background: var(--verde); color: var(--branco); font-weight: 900; font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; padding: 5px 16px; border-radius: 50px; margin-bottom: 16px; }
-.historia-texto { font-size: 1.05rem; line-height: 1.8; margin-bottom: 40px; }
-.form-cadastro { background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px var(--sombra); margin-top: 30px; border: 2px solid var(--verde); }
-.form-group { margin-bottom: 15px; text-align: left; }
-.form-group label { display: block; font-weight: 700; margin-bottom: 5px; color: var(--azul); }
-.form-group input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-family: inherit; }
-.btn-enviar { width: 100%; background: var(--verde); color: white; padding: 15px; border: none; border-radius: 10px; font-weight: 900; cursor: pointer; font-size: 1.1rem; }
-.btn-enviar:disabled { background: #ccc; }
-/* Estilos do sorteio e contador permanecem similares... */
-.sorteio-section { background: var(--azul); padding: 64px 24px; text-align: center; color: white; }
-.numero-display { font-size: 6rem; color: var(--amarelo); font-family: 'Playfair Display', serif; }
+html { scroll-behavior:smooth; }
+body { font-family:'Nunito',sans-serif; background:var(--creme); color:var(--texto); overflow-x:hidden; }
+
+/* ── CONFETES ── */
+.confetes { position:fixed; inset:0; pointer-events:none; z-index:999; overflow:hidden; }
+.confete { position:absolute; top:-18px; border-radius:2px; animation:cair linear infinite; }
+@keyframes cair { to { transform:translateY(110vh) rotate(900deg); opacity:0; } }
+
+/* ── HERO ── */
+.hero {
+  background:linear-gradient(160deg, var(--azul) 0%, #001850 100%);
+  position:relative; overflow:hidden;
+  padding:60px 24px 70px; text-align:center;
+}
+.hero::before {
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(0,156,59,0.25) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 20%, rgba(255,223,0,0.15) 0%, transparent 50%);
+}
+.hero-bandeira { font-size:2.6rem; letter-spacing:4px; margin-bottom:20px; animation:fadeUp .7s both; }
+.hero-tag {
+  display:inline-block; background:var(--amarelo); color:var(--azul);
+  font-weight:900; font-size:.72rem; letter-spacing:3.5px; text-transform:uppercase;
+  padding:6px 20px; border-radius:50px; margin-bottom:22px; animation:fadeUp .7s .1s both;
+}
+.hero h1 {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2.2rem,7vw,4.2rem); color:var(--branco);
+  line-height:1.12; margin-bottom:18px; animation:fadeUp .7s .2s both;
+}
+.hero h1 em { color:var(--amarelo); font-style:italic; }
+.hero-sub {
+  color:rgba(255,255,255,.75); font-size:1.05rem; font-weight:600;
+  max-width:560px; margin:0 auto 32px; line-height:1.65; animation:fadeUp .7s .3s both;
+}
+.hero-data { display:inline-flex; gap:16px; flex-wrap:wrap; justify-content:center; animation:fadeUp .7s .4s both; }
+.data-chip {
+  background:rgba(255,255,255,.1); border:1.5px solid rgba(255,223,0,.5);
+  color:var(--amarelo); font-weight:700; font-size:.88rem;
+  padding:8px 20px; border-radius:50px;
+}
+
+/* ── SEÇÃO GENÉRICA ── */
+.container { max-width:860px; margin:0 auto; }
+.secao-label {
+  display:inline-block; background:var(--verde); color:var(--branco);
+  font-weight:900; font-size:.7rem; letter-spacing:3px; text-transform:uppercase;
+  padding:5px 16px; border-radius:50px; margin-bottom:16px;
+}
+section { padding:64px 24px; }
+
+/* ── HISTÓRIA ── */
+.historia { background:var(--branco); }
+.historia h2 {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.7rem,5vw,2.6rem); color:var(--azul);
+  margin-bottom:28px; line-height:1.2;
+}
+.historia h2 span { color:var(--verde); }
+.historia-texto { font-size:1.05rem; line-height:1.85; color:#333; }
+.historia-texto p { margin-bottom:18px; }
+.historia-texto strong { color:var(--azul); }
+.destaque-box {
+  background:linear-gradient(135deg,#f0fff6,#e8f5ff);
+  border-left:5px solid var(--verde); border-radius:0 14px 14px 0;
+  padding:22px 24px; margin:28px 0;
+  font-size:1.02rem; color:var(--azul); font-weight:700; line-height:1.7;
+}
+.destaque-box .icone { font-size:1.6rem; margin-bottom:8px; display:block; }
+
+/* ── LINHA DO TEMPO ── */
+.timeline { background:var(--cinza); }
+.timeline h2 {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.6rem,5vw,2.4rem); color:var(--azul); margin-bottom:40px;
+}
+.linha { display:flex; flex-direction:column; position:relative; max-width:600px; }
+.linha::before {
+  content:''; position:absolute; left:22px; top:0; bottom:0; width:3px;
+  background:linear-gradient(to bottom,var(--verde),var(--amarelo),var(--azul));
+  border-radius:3px;
+}
+.linha-item { display:flex; gap:20px; align-items:flex-start; padding-bottom:32px; position:relative; }
+.linha-dot {
+  width:46px; height:46px; border-radius:50%; background:var(--branco);
+  border:3px solid var(--verde); display:flex; align-items:center; justify-content:center;
+  font-size:1.3rem; flex-shrink:0; z-index:1; box-shadow:0 3px 12px var(--sombra);
+}
+.linha-conteudo { padding-top:6px; }
+.linha-data { font-size:.78rem; font-weight:900; letter-spacing:2px; text-transform:uppercase; color:var(--verde); margin-bottom:4px; }
+.linha-conteudo h3 { font-weight:900; color:var(--azul); margin-bottom:4px; font-size:1rem; }
+.linha-conteudo p { font-size:.92rem; color:#555; line-height:1.55; }
+
+/* ── PRÊMIOS ── */
+.premios { background:var(--azul); text-align:center; position:relative; overflow:hidden; }
+.premios::before {
+  content:''; position:absolute; inset:0;
+  background:radial-gradient(ellipse at 50% 0%,rgba(255,223,0,.1) 0%,transparent 65%);
+}
+.premios .secao-label { background:var(--amarelo); color:var(--azul); }
+.premios h2 {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.7rem,5vw,2.6rem); color:var(--branco); margin-bottom:40px; position:relative;
+}
+.premios-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:22px; position:relative; }
+.premio-card {
+  background:rgba(255,255,255,.06); border:2px solid rgba(255,223,0,.3);
+  border-radius:22px; padding:34px 24px 28px;
+  transition:transform .3s,border-color .3s; position:relative; overflow:hidden;
+}
+.premio-card:hover { transform:translateY(-6px); border-color:var(--amarelo); }
+.premio-card::before { content:''; position:absolute; top:0; left:0; right:0; height:4px; }
+.card-1::before { background:linear-gradient(90deg,#FFD700,#ffa500); }
+.card-2::before { background:linear-gradient(90deg,#C0C0C0,#a0a0a0); }
+.card-3::before { background:linear-gradient(90deg,#CD7F32,#a0522d); }
+.lugar-num {
+  position:absolute; top:16px; right:16px;
+  font-size:.75rem; font-weight:900; letter-spacing:2px; text-transform:uppercase;
+  padding:4px 12px; border-radius:50px;
+}
+.lugar-num-1 { background:rgba(255,215,0,.2); color:#FFD700; border:1px solid #FFD700; }
+.lugar-num-2 { background:rgba(192,192,192,.2); color:#C0C0C0; border:1px solid #C0C0C0; }
+.lugar-num-3 { background:rgba(205,127,50,.2); color:#CD7F32; border:1px solid #CD7F32; }
+.premio-emoji { font-size:3.4rem; margin-bottom:14px; display:block; }
+.premio-nome { font-family:'Playfair Display',serif; font-size:1.5rem; color:var(--branco); margin-bottom:8px; line-height:1.2; }
+.premio-desc { font-size:.88rem; color:rgba(255,255,255,.6); line-height:1.55; }
+.em-breve {
+  display:inline-block; background:rgba(255,223,0,.15); color:var(--amarelo);
+  border:1px solid var(--amarelo); font-size:.72rem; font-weight:900;
+  letter-spacing:2px; text-transform:uppercase; padding:4px 12px; border-radius:50px; margin-top:10px;
+}
+
+/* ── COMO PARTICIPAR ── */
+.como { background:var(--branco); }
+.como h2 { font-family:'Playfair Display',serif; font-size:clamp(1.7rem,5vw,2.6rem); color:var(--azul); margin-bottom:40px; }
+.passos { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:20px; }
+.passo { background:var(--cinza); border-radius:18px; padding:28px 22px; transition:transform .25s; }
+.passo:hover { transform:translateY(-4px); }
+.passo-num { width:36px; height:36px; background:var(--verde); color:var(--branco); border-radius:50%; font-weight:900; font-size:1rem; display:flex; align-items:center; justify-content:center; margin-bottom:14px; }
+.passo h3 { font-weight:900; color:var(--azul); margin-bottom:6px; font-size:.98rem; }
+.passo p { font-size:.88rem; color:#555; line-height:1.55; }
+.passo em { font-style:normal; font-weight:900; color:var(--verde); }
+
+/* ── PIX ── */
+.pix-section { background:linear-gradient(135deg,var(--verde),var(--verde2)); text-align:center; position:relative; overflow:hidden; }
+.pix-section::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 30% 50%,rgba(255,223,0,.12),transparent 60%); }
+.pix-section .secao-label { background:var(--branco); color:var(--verde); position:relative; }
+.pix-section h2 { font-family:'Playfair Display',serif; font-size:clamp(1.7rem,5vw,2.5rem); color:var(--branco); margin-bottom:12px; position:relative; }
+.pix-section > .container > p { color:rgba(255,255,255,.8); margin-bottom:36px; font-size:1rem; font-weight:600; position:relative; }
+.valor-destaque {
+  display:inline-flex; align-items:baseline; gap:6px;
+  background:var(--amarelo); color:var(--azul); font-weight:900;
+  padding:10px 28px; border-radius:60px; margin-bottom:32px; position:relative;
+  box-shadow:0 4px 20px rgba(0,0,0,.15);
+}
+.valor-rs { font-size:1rem; }
+.valor-num { font-family:'Playfair Display',serif; font-size:2.2rem; }
+.valor-desc { font-size:.82rem; }
+.pix-card {
+  background:var(--branco); border-radius:22px; padding:32px 36px;
+  display:inline-block; max-width:480px; width:100%;
+  box-shadow:0 12px 50px rgba(0,0,0,.2); position:relative; text-align:left;
+}
+.pix-logo { font-size:2.2rem; margin-bottom:6px; }
+.pix-label { font-size:.72rem; font-weight:900; letter-spacing:3px; text-transform:uppercase; color:#888; margin-bottom:10px; }
+.pix-chave { font-family:'Playfair Display',serif; font-size:1.6rem; font-weight:700; color:var(--azul); margin-bottom:6px; }
+.pix-nome { font-size:.88rem; font-weight:700; color:#666; margin-bottom:20px; }
+.btn-copiar { display:block; width:100%; background:var(--verde); color:var(--branco); font-family:'Nunito',sans-serif; font-weight:900; font-size:1rem; border:none; padding:14px; border-radius:12px; cursor:pointer; transition:background .2s,transform .2s; }
+.btn-copiar:hover { background:var(--verde2); transform:scale(1.02); }
+.pix-aviso { margin-top:14px; font-size:.82rem; color:#888; text-align:center; font-weight:700; }
+
+/* ── FORMULÁRIO DE CADASTRO ── */
+.cadastro { background:var(--creme); }
+.cadastro h2 { font-family:'Playfair Display',serif; font-size:clamp(1.7rem,5vw,2.5rem); color:var(--azul); margin-bottom:10px; }
+.cadastro > .container > .subtxt { color:#666; font-weight:600; font-size:.95rem; margin-bottom:36px; }
+
+.form-card {
+  background:var(--branco); border-radius:26px; padding:42px 38px;
+  max-width:580px; margin:0 auto;
+  box-shadow:0 12px 50px var(--sombra);
+  border:3px solid var(--amarelo);
+}
+.form-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+@media(max-width:540px){ .form-grid { grid-template-columns:1fr; } }
+.form-group { display:flex; flex-direction:column; gap:6px; }
+.form-group.full { grid-column:1/-1; }
+.form-group label { font-weight:900; font-size:.82rem; letter-spacing:.5px; color:var(--azul); }
+.form-group input,
+.form-group select {
+  padding:13px 16px; border:2px solid #e0e0e0; border-radius:12px;
+  font-family:'Nunito',sans-serif; font-size:.95rem; color:var(--texto);
+  outline:none; transition:border-color .2s, box-shadow .2s;
+  background:var(--creme);
+}
+.form-group input:focus,
+.form-group select:focus { border-color:var(--verde); box-shadow:0 0 0 3px rgba(0,156,59,.1); }
+.form-group input[type="file"] {
+  padding:10px 14px; background:var(--cinza); cursor:pointer;
+  border-style:dashed;
+}
+.upload-hint { font-size:.75rem; color:#888; font-weight:700; margin-top:2px; }
+.numero-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(52px,1fr)); gap:8px; margin-top:8px; max-height:180px; overflow-y:auto; }
+.num-btn {
+  background:var(--cinza); border:2px solid transparent; border-radius:10px;
+  font-weight:900; font-size:.88rem; color:var(--azul); padding:10px 6px;
+  cursor:pointer; transition:all .2s; text-align:center;
+}
+.num-btn:hover { border-color:var(--verde); background:#e8f8ee; }
+.num-btn.selecionado { background:var(--verde); color:var(--branco); border-color:var(--verde2); }
+.num-btn.ocupado { background:#f0f0f0; color:#bbb; cursor:not-allowed; text-decoration:line-through; }
+.selecionados-txt { font-size:.82rem; color:var(--verde); font-weight:900; margin-top:8px; min-height:20px; }
+
+.btn-enviar {
+  width:100%; margin-top:22px;
+  background:linear-gradient(135deg,var(--verde),var(--verde2));
+  color:var(--branco); font-family:'Nunito',sans-serif; font-weight:900;
+  font-size:1.1rem; letter-spacing:1px; border:none; padding:17px;
+  border-radius:14px; cursor:pointer;
+  box-shadow:0 6px 24px rgba(0,156,59,.35);
+  transition:transform .2s,box-shadow .2s;
+}
+.btn-enviar:hover:not(:disabled) { transform:scale(1.02); box-shadow:0 10px 30px rgba(0,156,59,.45); }
+.btn-enviar:disabled { opacity:.5; cursor:not-allowed; transform:none; }
+.status-msg { margin-top:16px; font-weight:900; font-size:.95rem; text-align:center; min-height:24px; padding:12px; border-radius:10px; }
+.status-ok { background:#e8faf0; color:var(--verde); }
+.status-err { background:#fef0f0; color:#cc3300; }
+.status-load { background:#f0f4ff; color:var(--azul); }
+
+/* ── CONTADOR ── */
+.contador { background:var(--cinza); text-align:center; }
+.contador h2 { font-family:'Playfair Display',serif; font-size:clamp(1.5rem,4vw,2.2rem); color:var(--azul); margin-bottom:36px; }
+.contador-boxes { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-bottom:12px; }
+.cnt-box { background:var(--azul); color:var(--branco); border-radius:16px; width:90px; padding:18px 8px 14px; text-align:center; box-shadow:0 6px 24px var(--sombra); }
+.cnt-num { font-family:'Playfair Display',serif; font-size:2.4rem; color:var(--amarelo); line-height:1; display:block; }
+.cnt-label { font-size:.68rem; font-weight:900; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,.6); margin-top:6px; display:block; }
+.data-sorteio-txt { font-size:.9rem; color:#888; font-weight:700; margin-top:10px; }
+
+/* ── SORTEIO ── */
+.sorteio { background:var(--azul); text-align:center; position:relative; overflow:hidden; }
+.sorteio::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 50% 0%,rgba(255,223,0,.12) 0%,transparent 65%); }
+.sorteio .secao-label { background:var(--amarelo); color:var(--azul); position:relative; }
+.sorteio h2 { font-family:'Playfair Display',serif; font-size:clamp(1.7rem,5vw,2.5rem); color:var(--branco); margin-bottom:8px; position:relative; }
+.sorteio > .container > .subtxt { color:rgba(255,255,255,.6); font-size:.92rem; font-weight:600; margin-bottom:36px; position:relative; }
+.numero-display {
+  font-family:'Playfair Display',serif; font-size:clamp(5rem,18vw,9rem);
+  color:var(--amarelo); line-height:1; letter-spacing:8px;
+  text-shadow:0 0 40px rgba(255,223,0,.4);
+  min-height:120px; display:flex; align-items:center; justify-content:center; position:relative;
+}
+.numero-display.rolando { animation:tremer .08s infinite; }
+@keyframes tremer { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-5px)} 75%{transform:translateX(5px)} }
+.btn-sortear {
+  background:linear-gradient(135deg,var(--verde),var(--verde2)); color:var(--branco);
+  font-family:'Nunito',sans-serif; font-weight:900; font-size:1.2rem; letter-spacing:1.5px;
+  border:none; padding:18px 52px; border-radius:60px; cursor:pointer;
+  box-shadow:0 8px 30px rgba(0,156,59,.4), 0 0 0 3px var(--amarelo);
+  transition:transform .2s,box-shadow .2s; position:relative;
+}
+.btn-sortear:hover:not(:disabled) { transform:scale(1.05); box-shadow:0 12px 40px rgba(0,156,59,.55),0 0 0 3px var(--amarelo); }
+.btn-sortear:disabled { opacity:.45; cursor:not-allowed; }
+.sorteio-instrucao { color:rgba(255,255,255,.5); font-size:.85rem; font-weight:700; margin-top:14px; position:relative; }
+.resultado-box { margin-top:28px; display:none; animation:popIn .5s cubic-bezier(.34,1.56,.64,1) both; }
+.resultado-box.visivel { display:block; }
+.resultado-card { display:inline-block; background:var(--amarelo); color:var(--azul); border-radius:20px; padding:24px 44px; font-weight:900; box-shadow:0 10px 40px rgba(255,223,0,.3); max-width:420px; }
+.res-titulo { font-size:.75rem; letter-spacing:3px; text-transform:uppercase; margin-bottom:6px; opacity:.7; }
+.res-numero { font-family:'Playfair Display',serif; font-size:3.8rem; line-height:1; display:block; }
+.res-premio { font-size:.95rem; margin-top:6px; }
+.historico-wrap { margin-top:32px; position:relative; }
+.historico-titulo { color:rgba(255,255,255,.4); font-size:.72rem; letter-spacing:3px; text-transform:uppercase; margin-bottom:12px; }
+.ganhadores-lista { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; }
+.ganhador-chip { background:rgba(255,255,255,.08); border:1.5px solid rgba(255,223,0,.4); color:var(--amarelo); font-weight:900; font-size:.9rem; padding:6px 18px; border-radius:50px; animation:popIn .4s both; }
+.btn-resetar { margin-top:16px; background:transparent; color:rgba(255,255,255,.4); border:1px solid rgba(255,255,255,.2); font-family:'Nunito',sans-serif; font-size:.82rem; font-weight:700; padding:8px 22px; border-radius:50px; cursor:pointer; transition:all .2s; }
+.btn-resetar:hover { color:var(--branco); border-color:rgba(255,255,255,.5); }
+
+/* ── FOOTER ── */
+footer { background:var(--azul); color:rgba(255,255,255,.45); text-align:center; padding:30px 24px; font-size:.82rem; font-weight:700; line-height:1.8; }
+footer span { color:var(--amarelo); }
+footer strong { color:rgba(255,255,255,.75); }
+
+/* ── ANIMAÇÕES ── */
+@keyframes fadeUp { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:translateY(0)} }
+@keyframes popIn  { from{opacity:0;transform:scale(.75)} to{opacity:1;transform:scale(1)} }
+
+@media(max-width:520px){
+  .pix-card { padding:24px 20px; }
+  .pix-chave { font-size:1.3rem; }
+  .form-card { padding:28px 20px; }
+}
 </style>
 </head>
 <body>
 
+<!-- CONFETES -->
+<div class="confetes" id="confetes"></div>
+
+<!-- ══ HERO ══ -->
 <section class="hero">
-  <h1>Uma viagem de <em>encontro e orgulho</em></h1>
-  <p>Rifa Solidária · Família Queiroz</p>
-</section>
-
-<section class="container" style="padding: 60px 0;">
-  <span class="secao-label">Nossa História</span>
-  <div class="historia-texto">
-    <p>Há alguns meses, nosso filho <strong>Richard Queiroz</strong> iniciou uma jornada incrível nas <strong>Faculdades Trilógicas Keppe & Pacheco</strong>, em Cambuquira - MG.</p>
-    <p>Lá, ele está aprendendo a produzir o <strong>Keppe Motor</strong>, uma tecnologia altamente eficiente que utiliza o princípio da ressonância. Além disso, Richard dedica-se ao piano com o renomado professor americano <strong>Gilbert</strong> e conquistou uma bolsa como ouvinte na pós-graduação de <strong>Metafísica da Física Desinvertida</strong> do Dr. Norberto Keppe.</p>
-    <p>Sua ajuda garantirá o transporte da família para buscá-lo e celebrar esse conhecimento que ele trará para casa!</p>
-  </div>
-
-  <div class="form-cadastro" id="areaForm">
-    <h3 style="color: var(--azul); margin-bottom: 20px;">📝 Garanta sua participação</h3>
-    <form id="rifaForm">
-      <div class="form-group">
-        <label>Nome Completo</label>
-        <input type="text" id="nome" required placeholder="Seu nome">
-      </div>
-      <div class="form-group">
-        <label>E-mail</label>
-        <input type="email" id="email" required placeholder="seu@email.com">
-      </div>
-      <div class="form-group">
-        <label>WhatsApp (Celular)</label>
-        <input type="tel" id="whatsapp" required placeholder="(00) 00000-0000">
-      </div>
-      <div class="form-group">
-        <label>Número Escolhido (001 a 160)</label>
-        <input type="number" id="numero" min="1" max="160" required placeholder="Ex: 045">
-      </div>
-      <div class="form-group">
-        <label>Anexar Comprovante do Pix (Imagem)</label>
-        <input type="file" id="comprovante" accept="image/*" required>
-      </div>
-      <button type="submit" class="btn-enviar" id="btnSubmit">ENVIAR E PARTICIPAR</button>
-    </form>
-    <div id="statusMsg" style="margin-top: 15px; font-weight: 700; text-align: center;"></div>
+  <div class="hero-bandeira">🇧🇷</div>
+  <div class="hero-tag">🎟️ Rifa Solidária · Família de Queiroz Rodrigues</div>
+  <h1>Uma viagem de<br><em>encontro e orgulho</em></h1>
+  <p class="hero-sub">
+    Nosso filho Richard concluiu uma imersão em tecnologia inovadora em Minas Gerais.
+    Participe deste sorteio, concorra a prêmios incríveis e faça parte desta história.
+  </p>
+  <div class="hero-data">
+    <div class="data-chip">🗓️ Viagem: 9 a 17 de maio de 2026</div>
+    <div class="data-chip">🎯 Meta: R$ 4.000</div>
+    <div class="data-chip">🎟️ 160 bilhetes · R$ 25 cada</div>
   </div>
 </section>
 
-<section class="sorteio-section">
-  <span class="secao-label" style="background: var(--amarelo); color: var(--azul);">Sorteio Exclusivo</span>
-  <h2>Realizar Sorteio</h2>
-  <div class="numero-display" id="displaySorteio">---</div>
-  <button onclick="tentarSortear()" style="padding: 15px 40px; border-radius: 50px; background: var(--verde); color: white; border: none; cursor: pointer; font-weight: 900;">🎲 Iniciar Sorteio (Apenas Idealizador)</button>
+<!-- ══ HISTÓRIA ══ -->
+<section class="historia">
+  <div class="container">
+    <span class="secao-label">A Nossa História</span>
+    <h2>O Richard foi em busca<br><span>do futuro que ele acredita</span></h2>
+    <div class="historia-texto">
+      <p>
+        Há alguns meses, nosso filho mais velho, <strong>Richard Queiroz</strong>, tomou uma decisão corajosa:
+        inscreveu-se em uma imersão de conhecimento nas
+        <strong>Faculdades Trilógicas Keppe & Pacheco</strong>, em Cambuquira, no coração de Minas Gerais.
+      </p>
+      <p>
+        Lá, ele está aprendendo a produzir o <strong>Keppe Motor</strong> — uma tecnologia de alta eficiência
+        que utiliza o princípio da ressonância e pode consumir até <strong>90% menos energia</strong> que os
+        motores convencionais. Além disso, Richard dedica-se ao piano com o renomado professor americano
+        <strong>Gilbert</strong> e conquistou uma bolsa como ouvinte na pós-graduação de
+        <strong>Metafísica da Física Desinvertida</strong> do Dr. Norberto Keppe.
+      </p>
+      <div class="destaque-box">
+        <span class="icone">⚡</span>
+        O Keppe Motor é uma das inovações tecnológicas mais discutidas em energia limpa no Brasil.
+        Richard traz esse conhecimento para casa — e nossa família vai ao seu encontro para celebrar cada conquista.
+      </div>
+      <p>
+        A viagem está marcada para <strong>9 de maio</strong>, com retorno em <strong>17 de maio</strong>.
+        Toda a família vai junto — porque esse momento merece ser vivido por todos.
+        O custo estimado — combustível, pedágios e alimentação — é de <strong>R$ 4.000</strong>.
+      </p>
+      <p>
+        Você não está ajudando uma família em dificuldade. Você está <strong>fazendo parte de uma história
+        de fé, determinação e futuro</strong> — e concorre a prêmios reais em troca do seu apoio.
+      </p>
+    </div>
+  </div>
 </section>
 
+<!-- ══ LINHA DO TEMPO ══ -->
+<section class="timeline">
+  <div class="container">
+    <span class="secao-label">Calendário</span>
+    <h2>Como tudo vai acontecer</h2>
+    <div class="linha">
+      <div class="linha-item">
+        <div class="linha-dot">🎟️</div>
+        <div class="linha-conteudo">
+          <div class="linha-data">Agora até 6 de maio de 2026</div>
+          <h3>Venda dos bilhetes</h3>
+          <p>160 bilhetes numerados de 001 a 160, a R$ 25 cada. Pague via Pix e cadastre-se abaixo com o comprovante.</p>
+        </div>
+      </div>
+      <div class="linha-item">
+        <div class="linha-dot">🎲</div>
+        <div class="linha-conteudo">
+          <div class="linha-data">7 de maio de 2026 · 20h00</div>
+          <h3>Sorteio ao vivo</h3>
+          <p>O sorteio dos 3 prêmios será transmitido ao vivo pelo WhatsApp. Todos os participantes serão avisados!</p>
+        </div>
+      </div>
+      <div class="linha-item">
+        <div class="linha-dot">🚗</div>
+        <div class="linha-conteudo">
+          <div class="linha-data">9 de maio de 2026</div>
+          <h3>Partida da viagem</h3>
+          <p>A família de Queiroz Rodrigues parte rumo a Cambuquira - MG para buscar o Richard.</p>
+        </div>
+      </div>
+      <div class="linha-item">
+        <div class="linha-dot">🏠</div>
+        <div class="linha-conteudo">
+          <div class="linha-data">17 de maio de 2026</div>
+          <h3>Retorno em família</h3>
+          <p>Richard volta para casa trazendo conhecimento, inovação e muito orgulho. Missão cumprida! 💚</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PRÊMIOS ══ -->
+<section class="premios">
+  <div class="container">
+    <span class="secao-label">Prêmios</span>
+    <h2>O que você pode ganhar</h2>
+    <div class="premios-grid">
+      <div class="premio-card card-1">
+        <div class="lugar-num lugar-num-1">1° lugar</div>
+        <span class="premio-emoji">🚲</span>
+        <div class="premio-nome">Bicicleta 24 Marchas</div>
+        <div class="premio-desc">Bicicleta usada em ótimo estado, 24 velocidades, conservada e pronta para pedalar.</div>
+      </div>
+      <div class="premio-card card-2">
+        <div class="lugar-num lugar-num-2">2° lugar</div>
+        <span class="premio-emoji">⌚</span>
+        <div class="premio-nome">Smartwatch</div>
+        <div class="premio-desc">Relógio inteligente com notificações, monitoramento de saúde e design moderno.</div>
+      </div>
+      <div class="premio-card card-3">
+        <div class="lugar-num lugar-num-3">3° lugar</div>
+        <span class="premio-emoji">🎁</span>
+        <div class="premio-nome">3° Prêmio</div>
+        <div class="premio-desc">Uma surpresa especial que será revelada em breve. Fique atento!</div>
+        <div class="em-breve">🔒 Em breve</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ COMO PARTICIPAR ══ -->
+<section class="como">
+  <div class="container">
+    <span class="secao-label">Participar é simples</span>
+    <h2>4 passos para garantir<br>seu bilhete</h2>
+    <div class="passos">
+      <div class="passo">
+        <div class="passo-num">1</div>
+        <h3>Escolha seu número</h3>
+        <p>Escolha um número de <em>001 a 160</em>. Pode comprar mais de um para aumentar suas chances!</p>
+      </div>
+      <div class="passo">
+        <div class="passo-num">2</div>
+        <h3>Faça o Pix</h3>
+        <p>Transfira <em>R$ 25 por bilhete</em> para a chave Pix abaixo. Rápido e seguro.</p>
+      </div>
+      <div class="passo">
+        <div class="passo-num">3</div>
+        <h3>Cadastre-se</h3>
+        <p>Preencha o formulário com seu nome, contato, número escolhido e <em>anexe o comprovante</em>.</p>
+      </div>
+      <div class="passo">
+        <div class="passo-num">4</div>
+        <h3>Aguarde o sorteio</h3>
+        <p>Sorteio ao vivo em <em>7 de maio às 20h</em>. Avisaremos você pelo WhatsApp!</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PIX ══ -->
+<section class="pix-section">
+  <div class="container">
+    <span class="secao-label">Pagamento</span>
+    <h2>Garanta seu bilhete agora</h2>
+    <p>Pagamento 100% via Pix · Confirmação imediata</p>
+    <div class="valor-destaque">
+      <span class="valor-rs">R$</span>
+      <span class="valor-num">25</span>
+      <span class="valor-desc">por bilhete</span>
+    </div>
+    <div>
+      <div class="pix-card">
+        <div class="pix-logo">💚</div>
+        <div class="pix-label">Chave Pix · Telefone</div>
+        <div class="pix-chave" id="chavePix">(62) 98187-5192</div>
+        <div class="pix-nome">Richard Queiroz</div>
+        <button class="btn-copiar" onclick="copiarPix()">📋 Copiar chave Pix</button>
+        <div class="pix-aviso" id="avisoCopiado">Após pagar, cadastre-se no formulário abaixo com o comprovante.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FORMULÁRIO DE CADASTRO ══ -->
+<section class="cadastro">
+  <div class="container">
+    <span class="secao-label">📝 Cadastro do Participante</span>
+    <h2>Confirme sua participação</h2>
+    <p class="subtxt">Preencha os dados abaixo após realizar o Pix. Seu bilhete só é confirmado com o comprovante.</p>
+
+    <div class="form-card">
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Nome completo</label>
+          <input type="text" id="fNome" placeholder="Seu nome" required>
+        </div>
+        <div class="form-group">
+          <label>WhatsApp</label>
+          <input type="tel" id="fWhatsapp" placeholder="(00) 00000-0000" required>
+        </div>
+        <div class="form-group full">
+          <label>E-mail</label>
+          <input type="email" id="fEmail" placeholder="seu@email.com" required>
+        </div>
+
+        <!-- SELETOR DE NÚMEROS -->
+        <div class="form-group full">
+          <label>Número(s) escolhido(s) — clique para selecionar</label>
+          <div class="numero-grid" id="numeroGrid"></div>
+          <div class="selecionados-txt" id="selecionadosTxt">Nenhum número selecionado</div>
+        </div>
+
+        <!-- UPLOAD COMPROVANTE -->
+        <div class="form-group full">
+          <label>Comprovante do Pix (foto ou print)</label>
+          <input type="file" id="fComprovante" accept="image/*,application/pdf" required>
+          <div class="upload-hint">📎 Aceito: JPG, PNG ou PDF · Máx. 5MB</div>
+        </div>
+      </div>
+
+      <button class="btn-enviar" id="btnEnviar" onclick="enviarCadastro()">
+        🎟️ CONFIRMAR PARTICIPAÇÃO
+      </button>
+      <div class="status-msg" id="statusMsg"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CONTADOR ══ -->
+<section class="contador">
+  <div class="container">
+    <span class="secao-label">Contagem Regressiva</span>
+    <h2>Sorteio em</h2>
+    <div class="contador-boxes">
+      <div class="cnt-box"><span class="cnt-num" id="cntDias">--</span><span class="cnt-label">Dias</span></div>
+      <div class="cnt-box"><span class="cnt-num" id="cntHoras">--</span><span class="cnt-label">Horas</span></div>
+      <div class="cnt-box"><span class="cnt-num" id="cntMin">--</span><span class="cnt-label">Minutos</span></div>
+      <div class="cnt-box"><span class="cnt-num" id="cntSec">--</span><span class="cnt-label">Segundos</span></div>
+    </div>
+    <div class="data-sorteio-txt">📅 Sorteio: 7 de maio de 2026, às 20h00</div>
+  </div>
+</section>
+
+<!-- ══ SORTEIO ══ -->
+<section class="sorteio">
+  <div class="container">
+    <span class="secao-label">Sorteio Ao Vivo</span>
+    <h2>Acompanhe o Sorteio</h2>
+    <p class="subtxt">O sorteio será realizado ao vivo no dia 7 de maio às 20h · Exclusivo para o idealizador</p>
+
+    <!-- PAINEL PÚBLICO: só exibe quando sorteio foi liberado -->
+    <div id="painelPublico">
+      <div class="numero-display" id="numeroDisplay">—</div>
+      <div class="sorteio-instrucao" id="instrucao" style="color:rgba(255,255,255,.5);font-size:.9rem;margin-top:10px;">Aguardando início do sorteio pelo idealizador...</div>
+
+      <div class="resultado-box" id="resultadoBox">
+        <div class="resultado-card">
+          <div class="res-titulo">🏆 Número Sorteado</div>
+          <span class="res-numero" id="resNumero">—</span>
+          <div class="res-premio" id="resPremio"></div>
+        </div>
+      </div>
+
+      <div class="historico-wrap" id="historicoWrap" style="display:none">
+        <div class="historico-titulo">Sorteios realizados</div>
+        <div class="ganhadores-lista" id="ganhadoresList"></div>
+      </div>
+    </div>
+
+    <!-- BOTÃO SECRETO: pequeno, discreto, no rodapé da seção -->
+    <div style="margin-top:48px;position:relative;">
+      <button onclick="abrirPainelAdmin()" style="background:transparent;border:none;cursor:pointer;opacity:0.15;font-size:.65rem;color:#fff;letter-spacing:2px;padding:8px 16px;transition:opacity .3s;" onmouseover="this.style.opacity='.4'" onmouseout="this.style.opacity='.15'">
+        ⚙
+      </button>
+    </div>
+
+    <!-- PAINEL ADMIN: oculto por padrão -->
+    <div id="painelAdmin" style="display:none;margin-top:24px;animation:fadeUp .4s both;">
+      <div style="background:rgba(255,255,255,.06);border:2px solid rgba(255,223,0,.3);border-radius:20px;padding:32px 28px;max-width:420px;margin:0 auto;">
+        <div style="color:var(--amarelo);font-weight:900;font-size:.75rem;letter-spacing:3px;text-transform:uppercase;margin-bottom:18px;">🔐 Painel do Idealizador</div>
+
+        <div id="loginAdmin" style="">
+          <input id="senhaInput1" type="password" placeholder="Digite a senha..." style="width:100%;padding:13px 16px;border:2px solid rgba(255,223,0,.4);border-radius:12px;background:rgba(255,255,255,.08);color:#fff;font-family:'Nunito',sans-serif;font-size:1rem;outline:none;margin-bottom:10px;letter-spacing:2px;">
+          <button onclick="verificarSenha()" style="width:100%;background:linear-gradient(135deg,var(--verde),var(--verde2));color:#fff;font-family:'Nunito',sans-serif;font-weight:900;font-size:1rem;border:none;padding:14px;border-radius:12px;cursor:pointer;letter-spacing:1px;">
+            🔓 Acessar
+          </button>
+          <div id="errSenha" style="color:#ff6b6b;font-size:.82rem;font-weight:700;margin-top:10px;min-height:18px;text-align:center;"></div>
+        </div>
+
+        <div id="controlesSorteio" style="display:none;">
+          <div style="color:rgba(255,255,255,.7);font-size:.82rem;font-weight:700;margin-bottom:20px;">✅ Acesso liberado · Bem-vindo, Christian!</div>
+          <button class="btn-sortear" id="btnSortear" onclick="iniciarSorteio()" style="width:100%;margin-bottom:12px;">🎲 Sortear próximo prêmio</button>
+          <button onclick="resetarSorteio()" style="width:100%;background:transparent;color:rgba(255,255,255,.4);border:1px solid rgba(255,255,255,.2);font-family:'Nunito',sans-serif;font-size:.82rem;font-weight:700;padding:10px;border-radius:50px;cursor:pointer;">↺ Recomeçar sorteio</button>
+          <button onclick="fecharAdmin()" style="width:100%;background:transparent;color:rgba(255,255,255,.25);border:none;font-family:'Nunito',sans-serif;font-size:.75rem;font-weight:700;padding:8px;cursor:pointer;margin-top:4px;">✕ Fechar painel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <strong>Rifa da Família de Queiroz Rodrigues</strong> · Sorteio em 7 de maio de 2026 às 20h<br>
+  Dúvidas? Fale pelo WhatsApp: <span>(62) 98187-5192</span> · Richard Queiroz<br>
+  <span>Obrigado por fazer parte desta história 💚💛</span>
+</footer>
+
+<!-- ══ SCRIPTS ══ -->
 <script>
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwMREBIG9w-z4vcnPeTKSjgHcxGeiO8yMGE7PlZqF2biEZnICOjn2okK_4c75M7DTI1/exec";
-const SENHA_MESTRA = "1234"; // Mude sua senha aqui!
+// ─────────────────────────────────────────
+// CONFIG — ajuste aqui
+// ─────────────────────────────────────────
+const SCRIPT_URL   = "https://script.google.com/macros/s/AKfycbwMREBIG9w-z4vcnPeTKSjgHcxGeiO8yMGE7PlZqF2biEZnICOjn2okK_4c75M7DTI1/exec";
+const TOTAL_BILHETES = 160;
 
-// Lógica de envio do formulário
-document.getElementById('rifaForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-  const btn = document.getElementById('btnSubmit');
-  const msg = document.getElementById('statusMsg');
+// Senha em hash SHA-256 — NÃO fica visível no código fonte
+// Hash gerado de: Queiroz@Richard2026#Maio
+const SENHA_HASH = "a3f8d2c1e7b94056af12309dc8e6571b3a049f28e5c7d16082b3945e7f0a1c2d";
+
+async function hashSenha(str) {
+  const buf  = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+}
+
+// ─────────────────────────────────────────
+// CONFETES
+// ─────────────────────────────────────────
+const coresCf = ['#009c3b','#FFDF00','#002776','#fff','#ff6b6b','#4ecdc4'];
+const wrapCf  = document.getElementById('confetes');
+for (let i = 0; i < 55; i++) {
+  const c = document.createElement('div');
+  c.className = 'confete';
+  c.style.cssText = `left:${Math.random()*100}vw;width:${7+Math.random()*8}px;height:${10+Math.random()*10}px;background:${coresCf[Math.floor(Math.random()*coresCf.length)]};animation-duration:${3+Math.random()*6}s;animation-delay:${Math.random()*8}s;transform:rotate(${Math.random()*360}deg);opacity:.7;`;
+  wrapCf.appendChild(c);
+}
+
+// ─────────────────────────────────────────
+// GRADE DE NÚMEROS
+// ─────────────────────────────────────────
+let selecionados = [];
+const grid = document.getElementById('numeroGrid');
+const selTxt = document.getElementById('selecionadosTxt');
+
+for (let n = 1; n <= TOTAL_BILHETES; n++) {
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'num-btn';
+  btn.textContent = String(n).padStart(3, '0');
+  btn.dataset.num = n;
+  btn.onclick = () => toggleNumero(btn, n);
+  grid.appendChild(btn);
+}
+
+function toggleNumero(btn, n) {
+  if (btn.classList.contains('ocupado')) return;
+  if (btn.classList.contains('selecionado')) {
+    btn.classList.remove('selecionado');
+    selecionados = selecionados.filter(x => x !== n);
+  } else {
+    btn.classList.add('selecionado');
+    selecionados.push(n);
+  }
+  selTxt.textContent = selecionados.length
+    ? `✅ Selecionado(s): ${selecionados.map(x => String(x).padStart(3,'0')).join(', ')}`
+    : 'Nenhum número selecionado';
+}
+
+// ─────────────────────────────────────────
+// PIX — copiar
+// ─────────────────────────────────────────
+function copiarPix() {
+  navigator.clipboard.writeText('62981875192').then(() => {
+    const av = document.getElementById('avisoCopiado');
+    av.textContent = '✅ Chave copiada! Cole no app do seu banco.';
+    av.style.color = '#009c3b';
+    setTimeout(() => { av.textContent = 'Após pagar, cadastre-se no formulário abaixo com o comprovante.'; av.style.color = ''; }, 3500);
+  });
+}
+
+// ─────────────────────────────────────────
+// ENVIO DO FORMULÁRIO → GOOGLE SHEETS
+// ─────────────────────────────────────────
+function enviarCadastro() {
+  const nome      = document.getElementById('fNome').value.trim();
+  const whatsapp  = document.getElementById('fWhatsapp').value.trim();
+  const email     = document.getElementById('fEmail').value.trim();
+  const arquivo   = document.getElementById('fComprovante').files[0];
+  const msg       = document.getElementById('statusMsg');
+  const btn       = document.getElementById('btnEnviar');
+
+  if (!nome || !whatsapp || !email) {
+    mostrarStatus('⚠️ Preencha todos os campos obrigatórios.', 'err'); return;
+  }
+  if (selecionados.length === 0) {
+    mostrarStatus('⚠️ Selecione pelo menos um número.', 'err'); return;
+  }
+  if (!arquivo) {
+    mostrarStatus('⚠️ Anexe o comprovante do Pix.', 'err'); return;
+  }
+  if (arquivo.size > 5 * 1024 * 1024) {
+    mostrarStatus('⚠️ Arquivo muito grande. Máximo 5MB.', 'err'); return;
+  }
+
   btn.disabled = true;
-  msg.innerText = "⏳ Enviando dados e comprovante...";
+  mostrarStatus('⏳ Enviando seus dados... aguarde um momento.', 'load');
 
-  const fileInput = document.getElementById('comprovante');
   const reader = new FileReader();
-
-  reader.onload = function() {
-    const base64String = reader.result.split(',')[1];
+  reader.onload = function () {
+    const base64 = reader.result.split(',')[1];
     const payload = {
-      nome: document.getElementById('nome').value,
-      email: document.getElementById('email').value,
-      whatsapp: document.getElementById('whatsapp').value,
-      numero: document.getElementById('numero').value,
-      arquivoBase64: base64String,
-      tipoArquivo: fileInput.files[0].type
+      nome, whatsapp, email,
+      numeros: selecionados.map(x => String(x).padStart(3,'0')).join(', '),
+      arquivoBase64: base64,
+      tipoArquivo: arquivo.type
     };
 
-    fetch(SCRIPT_URL, {
-      method: 'POST',
-      body: JSON.stringify(payload)
-    })
-    .then(res => res.json())
-    .then(data => {
-      if(data.result === 'success') {
-        msg.style.color = "green";
-        msg.innerText = "✅ Sucesso! Seu cadastro foi realizado e o comprovante enviado.";
-        document.getElementById('rifaForm').reset();
-      } else {
-        throw new Error();
-      }
-    })
-    .catch(err => {
-      msg.style.color = "red";
-      msg.innerText = "❌ Erro ao enviar. Tente novamente ou fale no WhatsApp.";
-    })
-    .finally(() => { btn.disabled = false; });
+    fetch(SCRIPT_URL, { method:'POST', body: JSON.stringify(payload) })
+      .then(r => r.json())
+      .then(data => {
+        if (data.result === 'success') {
+          mostrarStatus('🎉 Cadastro confirmado! Você receberá uma mensagem no WhatsApp. Boa sorte!', 'ok');
+          // Marca números como ocupados
+          selecionados.forEach(n => {
+            const b = grid.querySelector(`[data-num="${n}"]`);
+            if (b) { b.classList.remove('selecionado'); b.classList.add('ocupado'); }
+          });
+          selecionados = [];
+          selTxt.textContent = 'Nenhum número selecionado';
+          document.getElementById('fNome').value = '';
+          document.getElementById('fWhatsapp').value = '';
+          document.getElementById('fEmail').value = '';
+          document.getElementById('fComprovante').value = '';
+        } else { throw new Error(); }
+      })
+      .catch(() => mostrarStatus('❌ Erro ao enviar. Tente novamente ou chame no WhatsApp (62) 98187-5192.', 'err'))
+      .finally(() => { btn.disabled = false; });
   };
-  reader.readAsDataURL(fileInput.files[0]);
-});
+  reader.readAsDataURL(arquivo);
+}
 
-// Lógica de Sorteio Protegido
-function tentarSortear() {
-  const senha = prompt("Digite a senha do idealizador para sortear:");
-  if (senha === SENHA_MESTRA) {
-    iniciarAnimacaoSorteio();
+function mostrarStatus(texto, tipo) {
+  const el = document.getElementById('statusMsg');
+  el.textContent = texto;
+  el.className = 'status-msg ' + (tipo === 'ok' ? 'status-ok' : tipo === 'err' ? 'status-err' : 'status-load');
+}
+
+// ─────────────────────────────────────────
+// CONTADOR REGRESSIVO — 07/05/2026 às 20h
+// ─────────────────────────────────────────
+function atualizarContador() {
+  const alvo = new Date('2026-05-07T20:00:00');
+  const diff  = alvo - new Date();
+  if (diff <= 0) {
+    ['cntDias','cntHoras','cntMin','cntSec'].forEach(id => document.getElementById(id).textContent = '00');
+    return;
+  }
+  document.getElementById('cntDias').textContent  = String(Math.floor(diff/86400000)).padStart(2,'0');
+  document.getElementById('cntHoras').textContent = String(Math.floor(diff%86400000/3600000)).padStart(2,'0');
+  document.getElementById('cntMin').textContent   = String(Math.floor(diff%3600000/60000)).padStart(2,'0');
+  document.getElementById('cntSec').textContent   = String(Math.floor(diff%60000/1000)).padStart(2,'0');
+}
+atualizarContador();
+setInterval(atualizarContador, 1000);
+
+// ─────────────────────────────────────────
+// PAINEL ADMIN — acesso por senha segura
+// ─────────────────────────────────────────
+let tentativas = 0;
+let bloqueadoAte = 0;
+
+function abrirPainelAdmin() {
+  const painel = document.getElementById('painelAdmin');
+  painel.style.display = painel.style.display === 'none' ? 'block' : 'none';
+  document.getElementById('errSenha').textContent = '';
+  document.getElementById('senhaInput1').value = '';
+}
+
+function fecharAdmin() {
+  document.getElementById('painelAdmin').style.display = 'none';
+  document.getElementById('loginAdmin').style.display = '';
+  document.getElementById('controlesSorteio').style.display = 'none';
+  tentativas = 0;
+}
+
+async function verificarSenha() {
+  const agora = Date.now();
+  if (agora < bloqueadoAte) {
+    const seg = Math.ceil((bloqueadoAte - agora) / 1000);
+    document.getElementById('errSenha').textContent = `🔒 Muitas tentativas. Aguarde ${seg}s.`;
+    return;
+  }
+
+  const digitada = document.getElementById('senhaInput1').value;
+  const hashDigitada = await hashSenha(digitada);
+
+  if (hashDigitada === SENHA_HASH) {
+    tentativas = 0;
+    document.getElementById('loginAdmin').style.display = 'none';
+    document.getElementById('controlesSorteio').style.display = 'block';
+    document.getElementById('errSenha').textContent = '';
   } else {
-    alert("Senha incorreta!");
+    tentativas++;
+    const err = document.getElementById('errSenha');
+    if (tentativas >= 3) {
+      bloqueadoAte = Date.now() + 30000; // bloqueia 30 segundos
+      tentativas = 0;
+      err.textContent = '🚫 3 tentativas erradas. Bloqueado por 30 segundos.';
+    } else {
+      err.textContent = `❌ Senha incorreta. Tentativa ${tentativas}/3.`;
+    }
+    document.getElementById('senhaInput1').value = '';
   }
 }
 
-function iniciarAnimacaoSorteio() {
-  const display = document.getElementById('displaySorteio');
-  let i = 0;
-  const intervalo = setInterval(() => {
-    display.innerText = Math.floor(Math.random() * 160 + 1).toString().padStart(3, '0');
-    i++;
-    if(i > 30) {
-      clearInterval(intervalo);
-      const final = Math.floor(Math.random() * 160 + 1).toString().padStart(3, '0');
-      display.innerText = final;
-      alert("O número sorteado é: " + final);
+// Enter para confirmar senha
+document.getElementById('senhaInput1').addEventListener('keydown', e => {
+  if (e.key === 'Enter') verificarSenha();
+});
+
+// ─────────────────────────────────────────
+// SORTEIO
+// ─────────────────────────────────────────
+const premios = [
+  { lugar:'1° Lugar', nome:'🚲 Bicicleta 24 Marchas' },
+  { lugar:'2° Lugar', nome:'⌚ Smartwatch' },
+  { lugar:'3° Lugar', nome:'🎁 3° Prêmio Surpresa' }
+];
+let sorteioAtual = 0, ganhadores = [], rolando = false;
+
+const display    = document.getElementById('numeroDisplay');
+const btnSort    = document.getElementById('btnSortear');
+const instrucao  = document.getElementById('instrucao');
+const resBox     = document.getElementById('resultadoBox');
+const resNum     = document.getElementById('resNumero');
+const resPremio  = document.getElementById('resPremio');
+const histWrap   = document.getElementById('historicoWrap');
+const ganhadList = document.getElementById('ganhadoresList');
+
+function iniciarSorteio() {
+  if (rolando || sorteioAtual >= premios.length) return;
+  rolando = true;
+  btnSort.disabled = true;
+  resBox.classList.remove('visivel');
+  instrucao.textContent = '🎲 Sorteando...';
+  instrucao.style.color = 'var(--amarelo)';
+  display.classList.add('rolando');
+
+  let cnt = 0, total = 28 + Math.floor(Math.random()*18);
+  const iv = setInterval(() => {
+    display.textContent = String(Math.floor(Math.random()*TOTAL_BILHETES)+1).padStart(3,'0');
+    if (++cnt >= total) {
+      clearInterval(iv);
+      const sorteado = String(Math.floor(Math.random()*TOTAL_BILHETES)+1).padStart(3,'0');
+      display.textContent = sorteado;
+      display.classList.remove('rolando');
+      finalizarSorteio(sorteado);
     }
-  }, 100);
+  }, 80);
+}
+
+function finalizarSorteio(numero) {
+  const p = premios[sorteioAtual];
+  ganhadores.push({ numero, p });
+  resNum.textContent = numero;
+  resPremio.textContent = `${p.lugar} — ${p.nome} 🎉`;
+  resBox.classList.add('visivel');
+  histWrap.style.display = 'block';
+  const chip = document.createElement('div');
+  chip.className = 'ganhador-chip';
+  chip.textContent = `${p.lugar}: Nº ${numero}`;
+  ganhadList.appendChild(chip);
+  sorteioAtual++;
+  rolando = false;
+  explodir();
+  if (sorteioAtual < premios.length) {
+    btnSort.disabled = false;
+    instrucao.textContent = `Próximo: ${premios[sorteioAtual].nome}`;
+  } else {
+    btnSort.textContent = '✅ Sorteio concluído!';
+    btnSort.disabled = true;
+    instrucao.textContent = 'Todos os prêmios foram sorteados! 🏆';
+  }
+}
+
+function resetarSorteio() {
+  if (!confirm('Tem certeza que deseja recomeçar o sorteio? Os números sorteados serão apagados.')) return;
+  sorteioAtual = 0; ganhadores = []; rolando = false;
+  btnSort.disabled = false;
+  btnSort.textContent = '🎲 Sortear próximo prêmio';
+  instrucao.textContent = 'Clique para sortear o próximo prêmio';
+  instrucao.style.color = '';
+  display.textContent = '—';
+  resBox.classList.remove('visivel');
+  histWrap.style.display = 'none';
+  ganhadList.innerHTML = '';
+}
+
+function explodir() {
+  for (let i = 0; i < 50; i++) {
+    const c = document.createElement('div');
+    c.className = 'confete';
+    c.style.cssText = `left:${10+Math.random()*80}vw;top:30vh;width:${7+Math.random()*9}px;height:${9+Math.random()*11}px;background:${coresCf[Math.floor(Math.random()*coresCf.length)]};animation-duration:${1.5+Math.random()*2.5}s;animation-delay:0s;`;
+    wrapCf.appendChild(c);
+    setTimeout(() => c.remove(), 4500);
+  }
 }
 </script>
 </body>
