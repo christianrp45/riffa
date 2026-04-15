@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎟️ Rifa — Família Queiroz | Viagem ao Encontro do Richard</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Nunito:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+/* ... Mantive seus estilos originais e adicionei novos para o formulário ... */
+:root { --verde: #009c3b; --verde2: #007a2e; --amarelo: #FFDF00; --azul: #002776; --branco: #ffffff; --creme: #fffef5; --cinza: #f0efe8; --texto: #1a1a2e; --sombra: rgba(0,39,118,0.14); }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: 'Nunito', sans-serif; background: var(--creme); color: var(--texto); overflow-x: hidden; }
+.hero { background: linear-gradient(160deg, var(--azul) 0%, #001850 100%); padding: 60px 24px; text-align: center; color: white; }
+.container { max-width: 860px; margin: 0 auto; padding: 0 20px; }
+.secao-label { display: inline-block; background: var(--verde); color: var(--branco); font-weight: 900; font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; padding: 5px 16px; border-radius: 50px; margin-bottom: 16px; }
+.historia-texto { font-size: 1.05rem; line-height: 1.8; margin-bottom: 40px; }
+.form-cadastro { background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px var(--sombra); margin-top: 30px; border: 2px solid var(--verde); }
+.form-group { margin-bottom: 15px; text-align: left; }
+.form-group label { display: block; font-weight: 700; margin-bottom: 5px; color: var(--azul); }
+.form-group input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-family: inherit; }
+.btn-enviar { width: 100%; background: var(--verde); color: white; padding: 15px; border: none; border-radius: 10px; font-weight: 900; cursor: pointer; font-size: 1.1rem; }
+.btn-enviar:disabled { background: #ccc; }
+/* Estilos do sorteio e contador permanecem similares... */
+.sorteio-section { background: var(--azul); padding: 64px 24px; text-align: center; color: white; }
+.numero-display { font-size: 6rem; color: var(--amarelo); font-family: 'Playfair Display', serif; }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <h1>Uma viagem de <em>encontro e orgulho</em></h1>
+  <p>Rifa Solidária · Família Queiroz</p>
+</section>
+
+<section class="container" style="padding: 60px 0;">
+  <span class="secao-label">Nossa História</span>
+  <div class="historia-texto">
+    <p>Há alguns meses, nosso filho <strong>Richard Queiroz</strong> iniciou uma jornada incrível nas <strong>Faculdades Trilógicas Keppe & Pacheco</strong>, em Cambuquira - MG.</p>
+    <p>Lá, ele está aprendendo a produzir o <strong>Keppe Motor</strong>, uma tecnologia altamente eficiente que utiliza o princípio da ressonância. Além disso, Richard dedica-se ao piano com o renomado professor americano <strong>Gilbert</strong> e conquistou uma bolsa como ouvinte na pós-graduação de <strong>Metafísica da Física Desinvertida</strong> do Dr. Norberto Keppe.</p>
+    <p>Sua ajuda garantirá o transporte da família para buscá-lo e celebrar esse conhecimento que ele trará para casa!</p>
+  </div>
+
+  <div class="form-cadastro" id="areaForm">
+    <h3 style="color: var(--azul); margin-bottom: 20px;">📝 Garanta sua participação</h3>
+    <form id="rifaForm">
+      <div class="form-group">
+        <label>Nome Completo</label>
+        <input type="text" id="nome" required placeholder="Seu nome">
+      </div>
+      <div class="form-group">
+        <label>E-mail</label>
+        <input type="email" id="email" required placeholder="seu@email.com">
+      </div>
+      <div class="form-group">
+        <label>WhatsApp (Celular)</label>
+        <input type="tel" id="whatsapp" required placeholder="(00) 00000-0000">
+      </div>
+      <div class="form-group">
+        <label>Número Escolhido (001 a 160)</label>
+        <input type="number" id="numero" min="1" max="160" required placeholder="Ex: 045">
+      </div>
+      <div class="form-group">
+        <label>Anexar Comprovante do Pix (Imagem)</label>
+        <input type="file" id="comprovante" accept="image/*" required>
+      </div>
+      <button type="submit" class="btn-enviar" id="btnSubmit">ENVIAR E PARTICIPAR</button>
+    </form>
+    <div id="statusMsg" style="margin-top: 15px; font-weight: 700; text-align: center;"></div>
+  </div>
+</section>
+
+<section class="sorteio-section">
+  <span class="secao-label" style="background: var(--amarelo); color: var(--azul);">Sorteio Exclusivo</span>
+  <h2>Realizar Sorteio</h2>
+  <div class="numero-display" id="displaySorteio">---</div>
+  <button onclick="tentarSortear()" style="padding: 15px 40px; border-radius: 50px; background: var(--verde); color: white; border: none; cursor: pointer; font-weight: 900;">🎲 Iniciar Sorteio (Apenas Idealizador)</button>
+</section>
+
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwMREBIG9w-z4vcnPeTKSjgHcxGeiO8yMGE7PlZqF2biEZnICOjn2okK_4c75M7DTI1/exec";
+const SENHA_MESTRA = "1234"; // Mude sua senha aqui!
+
+// Lógica de envio do formulário
+document.getElementById('rifaForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const btn = document.getElementById('btnSubmit');
+  const msg = document.getElementById('statusMsg');
+  btn.disabled = true;
+  msg.innerText = "⏳ Enviando dados e comprovante...";
+
+  const fileInput = document.getElementById('comprovante');
+  const reader = new FileReader();
+
+  reader.onload = function() {
+    const base64String = reader.result.split(',')[1];
+    const payload = {
+      nome: document.getElementById('nome').value,
+      email: document.getElementById('email').value,
+      whatsapp: document.getElementById('whatsapp').value,
+      numero: document.getElementById('numero').value,
+      arquivoBase64: base64String,
+      tipoArquivo: fileInput.files[0].type
+    };
+
+    fetch(SCRIPT_URL, {
+      method: 'POST',
+      body: JSON.stringify(payload)
+    })
+    .then(res => res.json())
+    .then(data => {
+      if(data.result === 'success') {
+        msg.style.color = "green";
+        msg.innerText = "✅ Sucesso! Seu cadastro foi realizado e o comprovante enviado.";
+        document.getElementById('rifaForm').reset();
+      } else {
+        throw new Error();
+      }
+    })
+    .catch(err => {
+      msg.style.color = "red";
+      msg.innerText = "❌ Erro ao enviar. Tente novamente ou fale no WhatsApp.";
+    })
+    .finally(() => { btn.disabled = false; });
+  };
+  reader.readAsDataURL(fileInput.files[0]);
+});
+
+// Lógica de Sorteio Protegido
+function tentarSortear() {
+  const senha = prompt("Digite a senha do idealizador para sortear:");
+  if (senha === SENHA_MESTRA) {
+    iniciarAnimacaoSorteio();
+  } else {
+    alert("Senha incorreta!");
+  }
+}
+
+function iniciarAnimacaoSorteio() {
+  const display = document.getElementById('displaySorteio');
+  let i = 0;
+  const intervalo = setInterval(() => {
+    display.innerText = Math.floor(Math.random() * 160 + 1).toString().padStart(3, '0');
+    i++;
+    if(i > 30) {
+      clearInterval(intervalo);
+      const final = Math.floor(Math.random() * 160 + 1).toString().padStart(3, '0');
+      display.innerText = final;
+      alert("O número sorteado é: " + final);
+    }
+  }, 100);
+}
+</script>
+</body>
+</html>
