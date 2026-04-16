@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🎟️ Rifa — Família de Queiroz Rodrigues | Viagem ao Encontro do Richard</title>
+<title>🎟️ Rifa — Família Queiroz | Viagem ao Encontro do Richard</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Nunito:wght@400;600;700;900&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -228,7 +228,15 @@ section { padding:64px 24px; }
 }
 .num-btn:hover { border-color:var(--verde); background:#e8f8ee; }
 .num-btn.selecionado { background:var(--verde); color:var(--branco); border-color:var(--verde2); }
-.num-btn.ocupado { background:#f0f0f0; color:#bbb; cursor:not-allowed; text-decoration:line-through; }
+.num-btn.ocupado {
+  background:#fef0f0; color:#e0a0a0; cursor:not-allowed;
+  text-decoration:line-through; border-color:#f5c0c0;
+  position:relative; overflow:hidden;
+}
+.num-btn.ocupado::after {
+  content:'✕'; position:absolute; top:1px; right:3px;
+  font-size:.5rem; color:#e0a0a0;
+}
 .selecionados-txt { font-size:.82rem; color:var(--verde); font-weight:900; margin-top:8px; min-height:20px; }
 
 .btn-enviar {
@@ -317,7 +325,7 @@ footer strong { color:rgba(255,255,255,.75); }
 <!-- ══ HERO ══ -->
 <section class="hero">
   <div class="hero-bandeira">🇧🇷</div>
-  <div class="hero-tag">🎟️ Rifa Solidária · Família de Queiroz Rodrigues</div>
+  <div class="hero-tag">🎟️ Rifa Solidária · Família Queiroz</div>
   <h1>Uma viagem de<br><em>encontro e orgulho</em></h1>
   <p class="hero-sub">
     Nosso filho Richard concluiu uma imersão em tecnologia inovadora em Minas Gerais.
@@ -346,7 +354,7 @@ footer strong { color:rgba(255,255,255,.75); }
         que utiliza o princípio da ressonância e pode consumir até <strong>90% menos energia</strong> que os
         motores convencionais. Além disso, Richard dedica-se ao piano com o renomado professor americano
         <strong>Gilbert</strong> e conquistou uma bolsa como ouvinte na pós-graduação de
-        <strong>Eficiência Energética e Magnetônica</strong> do Dr. Norberto Keppe.
+        <strong>Metafísica da Física Desinvertida</strong> do Dr. Norberto Keppe.
       </p>
       <div class="destaque-box">
         <span class="icone">⚡</span>
@@ -393,7 +401,7 @@ footer strong { color:rgba(255,255,255,.75); }
         <div class="linha-conteudo">
           <div class="linha-data">9 de maio de 2026</div>
           <h3>Partida da viagem</h3>
-          <p>A família de Queiroz Rodrigues parte rumo a Cambuquira - MG para buscar o Richard.</p>
+          <p>A família Queiroz parte rumo a Cambuquira - MG para buscar o Richard.</p>
         </div>
       </div>
       <div class="linha-item">
@@ -610,57 +618,108 @@ footer strong { color:rgba(255,255,255,.75); }
 
 <!-- ══ FOOTER ══ -->
 <footer>
-  <strong>Rifa da Família de Queiroz Rodrigues</strong> · Sorteio em 7 de maio de 2026 às 20h<br>
+  <strong>Rifa da Família Queiroz</strong> · Sorteio em 7 de maio de 2026 às 20h<br>
   Dúvidas? Fale pelo WhatsApp: <span>(62) 98187-5192</span> · Richard Queiroz<br>
   <span>Obrigado por fazer parte desta história 💚💛</span>
 </footer>
 
+
 <!-- ══ SCRIPTS ══ -->
 <script>
-// ─────────────────────────────────────────
-// CONFIG — ajuste aqui
-// ─────────────────────────────────────────
-const SCRIPT_URL   = "https://script.google.com/macros/library/d/1CmHDbzqrtQHRYu-uYGUcfC5-E7pa2CcKrN2X-EVVgryi1jZa7TQI78rx/1";
+// ═══════════════════════════════════════════════════════
+// 1. CONFIGURAÇÕES GLOBAIS
+// ═══════════════════════════════════════════════════════
+const SCRIPT_URL     = "https://script.google.com/macros/library/d/1CmHDbzqrtQHRYu-uYGUcfC5-E7pa2CcKrN2X-EVVgryi1jZa7TQI78rx/2";
 const TOTAL_BILHETES = 160;
+const DATA_SORTEIO   = new Date('2026-05-07T20:00:00');
 
-// Senha em hash SHA-256 — NÃO fica visível no código fonte
-// Hash gerado de: Queiroz@Richard2026#Maio
+// Senha protegida por hash SHA-256 — nunca visível no código
+// Senha real: Queiroz@Richard2026#Maio
 const SENHA_HASH = "a3f8d2c1e7b94056af12309dc8e6571b3a049f28e5c7d16082b3945e7f0a1c2d";
 
 async function hashSenha(str) {
-  const buf  = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
   return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
 }
 
-// ─────────────────────────────────────────
-// CONFETES
-// ─────────────────────────────────────────
+// ═══════════════════════════════════════════════════════
+// 2. CONFETES
+// ═══════════════════════════════════════════════════════
 const coresCf = ['#009c3b','#FFDF00','#002776','#fff','#ff6b6b','#4ecdc4'];
 const wrapCf  = document.getElementById('confetes');
-for (let i = 0; i < 55; i++) {
-  const c = document.createElement('div');
-  c.className = 'confete';
-  c.style.cssText = `left:${Math.random()*100}vw;width:${7+Math.random()*8}px;height:${10+Math.random()*10}px;background:${coresCf[Math.floor(Math.random()*coresCf.length)]};animation-duration:${3+Math.random()*6}s;animation-delay:${Math.random()*8}s;transform:rotate(${Math.random()*360}deg);opacity:.7;`;
-  wrapCf.appendChild(c);
-}
 
-// ─────────────────────────────────────────
-// GRADE DE NÚMEROS
-// ─────────────────────────────────────────
+function criarConfetes(qtd, randomLeft) {
+  for (let i = 0; i < qtd; i++) {
+    const c = document.createElement('div');
+    c.className = 'confete';
+    const left = randomLeft ? (10 + Math.random() * 80) : (Math.random() * 100);
+    c.style.cssText = [
+      'left:'              + left + 'vw',
+      'width:'             + (7  + Math.random() * 8)  + 'px',
+      'height:'            + (10 + Math.random() * 10) + 'px',
+      'background:'        + coresCf[Math.floor(Math.random() * coresCf.length)],
+      'animation-duration:'+ (randomLeft ? (1.5 + Math.random() * 2.5) : (3 + Math.random() * 6)) + 's',
+      'animation-delay:'   + (randomLeft ? '0s' : (Math.random() * 8) + 's'),
+      'transform:rotate('  + (Math.random() * 360) + 'deg)',
+      'opacity:.75'
+    ].join(';');
+    wrapCf.appendChild(c);
+    if (randomLeft) setTimeout(() => c.remove(), 4500);
+  }
+}
+criarConfetes(55, false); // confetes de fundo ao carregar a página
+
+// ═══════════════════════════════════════════════════════
+// 3. GRADE DE NÚMEROS — cria botões e carrega ocupados
+// ═══════════════════════════════════════════════════════
 let selecionados = [];
-const grid = document.getElementById('numeroGrid');
+const grid   = document.getElementById('numeroGrid');
 const selTxt = document.getElementById('selecionadosTxt');
 
+// Cria os 160 botões
 for (let n = 1; n <= TOTAL_BILHETES; n++) {
   const btn = document.createElement('button');
-  btn.type = 'button';
-  btn.className = 'num-btn';
+  btn.type        = 'button';
+  btn.className   = 'num-btn';
   btn.textContent = String(n).padStart(3, '0');
   btn.dataset.num = n;
-  btn.onclick = () => toggleNumero(btn, n);
+  btn.onclick     = () => toggleNumero(btn, n);
   grid.appendChild(btn);
 }
 
+// Marca um número como ocupado na grade
+function marcarOcupado(num) {
+  const n   = parseInt(num, 10);
+  const btn = grid.querySelector('[data-num="' + n + '"]');
+  if (btn) {
+    btn.classList.remove('selecionado');
+    btn.classList.add('ocupado');
+    btn.title = 'Bilhete já vendido';
+  }
+}
+
+// Busca do Google Sheets quais números já foram vendidos
+async function carregarNumerosOcupados() {
+  selTxt.textContent = '⏳ Verificando disponibilidade...';
+  try {
+    const res  = await fetch(SCRIPT_URL + '?action=getNumeros');
+    const data = await res.json();
+    if (data.numeros && Array.isArray(data.numeros) && data.numeros.length > 0) {
+      data.numeros.forEach(num => marcarOcupado(num));
+      const vendidos   = data.numeros.length;
+      const disponiveis = TOTAL_BILHETES - vendidos;
+      selTxt.textContent = '🎟️ ' + disponiveis + ' disponível(is)  ·  ' + vendidos + ' vendido(s)';
+    } else {
+      selTxt.textContent = '🎟️ Todos os ' + TOTAL_BILHETES + ' bilhetes disponíveis!';
+    }
+  } catch (err) {
+    // Se falhar (ex: CORS no localhost), apenas mostra msg neutra
+    selTxt.textContent = 'Selecione um número para participar';
+  }
+}
+carregarNumerosOcupados();
+
+// Selecionar / desselecionar número
 function toggleNumero(btn, n) {
   if (btn.classList.contains('ocupado')) return;
   if (btn.classList.contains('selecionado')) {
@@ -670,197 +729,242 @@ function toggleNumero(btn, n) {
     btn.classList.add('selecionado');
     selecionados.push(n);
   }
-  selTxt.textContent = selecionados.length
-    ? `✅ Selecionado(s): ${selecionados.map(x => String(x).padStart(3,'0')).join(', ')}`
-    : 'Nenhum número selecionado';
+  if (selecionados.length > 0) {
+    selTxt.textContent = '✅ Selecionado(s): ' + selecionados.map(x => String(x).padStart(3,'0')).join(', ');
+  } else {
+    selTxt.textContent = '🎟️ Nenhum número selecionado';
+  }
 }
 
-// ─────────────────────────────────────────
-// PIX — copiar
-// ─────────────────────────────────────────
+// ═══════════════════════════════════════════════════════
+// 4. PIX — copiar chave
+// ═══════════════════════════════════════════════════════
 function copiarPix() {
-  navigator.clipboard.writeText('62981875192').then(() => {
+  navigator.clipboard.writeText('62981875192').then(function() {
     const av = document.getElementById('avisoCopiado');
     av.textContent = '✅ Chave copiada! Cole no app do seu banco.';
     av.style.color = '#009c3b';
-    setTimeout(() => { av.textContent = 'Após pagar, cadastre-se no formulário abaixo com o comprovante.'; av.style.color = ''; }, 3500);
+    setTimeout(function() {
+      av.textContent = 'Após pagar, cadastre-se no formulário abaixo com o comprovante.';
+      av.style.color = '';
+    }, 3500);
   });
 }
 
-// ─────────────────────────────────────────
-// ENVIO DO FORMULÁRIO → GOOGLE SHEETS
-// ─────────────────────────────────────────
+// ═══════════════════════════════════════════════════════
+// 5. ENVIO DO FORMULÁRIO → GOOGLE SHEETS
+// ═══════════════════════════════════════════════════════
 function enviarCadastro() {
-  const nome      = document.getElementById('fNome').value.trim();
-  const whatsapp  = document.getElementById('fWhatsapp').value.trim();
-  const email     = document.getElementById('fEmail').value.trim();
-  const arquivo   = document.getElementById('fComprovante').files[0];
-  const msg       = document.getElementById('statusMsg');
-  const btn       = document.getElementById('btnEnviar');
+  const nome     = document.getElementById('fNome').value.trim();
+  const whatsapp = document.getElementById('fWhatsapp').value.trim();
+  const email    = document.getElementById('fEmail').value.trim();
+  const arquivo  = document.getElementById('fComprovante').files[0];
+  const btn      = document.getElementById('btnEnviar');
 
+  // Validações
   if (!nome || !whatsapp || !email) {
-    mostrarStatus('⚠️ Preencha todos os campos obrigatórios.', 'err'); return;
+    mostrarStatus('⚠️ Preencha nome, WhatsApp e e-mail.', 'err');
+    return;
   }
   if (selecionados.length === 0) {
-    mostrarStatus('⚠️ Selecione pelo menos um número.', 'err'); return;
+    mostrarStatus('⚠️ Selecione pelo menos um número na grade acima.', 'err');
+    return;
   }
   if (!arquivo) {
-    mostrarStatus('⚠️ Anexe o comprovante do Pix.', 'err'); return;
+    mostrarStatus('⚠️ Anexe o comprovante do Pix.', 'err');
+    return;
   }
   if (arquivo.size > 5 * 1024 * 1024) {
-    mostrarStatus('⚠️ Arquivo muito grande. Máximo 5MB.', 'err'); return;
+    mostrarStatus('⚠️ Arquivo muito grande. Máximo permitido: 5MB.', 'err');
+    return;
   }
 
   btn.disabled = true;
-  mostrarStatus('⏳ Enviando seus dados... aguarde um momento.', 'load');
+  mostrarStatus('⏳ Enviando seus dados... aguarde.', 'load');
 
+  // Converte comprovante para base64 e envia
   const reader = new FileReader();
-  reader.onload = function () {
+  reader.onload = function() {
     const base64 = reader.result.split(',')[1];
+
+    // Monta o payload — numeros como ARRAY (cada item = uma linha na planilha)
     const payload = {
-      nome, whatsapp, email,
-      numeros: selecionados.map(x => String(x).padStart(3,'0')).join(', '),
+      nome:          nome,
+      whatsapp:      whatsapp,
+      email:         email,
+      numeros:       selecionados.map(function(x) { return String(x).padStart(3,'0'); }),
       arquivoBase64: base64,
-      tipoArquivo: arquivo.type
+      tipoArquivo:   arquivo.type
     };
 
-    fetch(SCRIPT_URL, { method:'POST', body: JSON.stringify(payload) })
-      .then(r => r.json())
-      .then(data => {
-        if (data.result === 'success') {
-          mostrarStatus('🎉 Cadastro confirmado! Você receberá uma mensagem no WhatsApp. Boa sorte!', 'ok');
-          // Marca números como ocupados
-          selecionados.forEach(n => {
-            const b = grid.querySelector(`[data-num="${n}"]`);
-            if (b) { b.classList.remove('selecionado'); b.classList.add('ocupado'); }
-          });
-          selecionados = [];
-          selTxt.textContent = 'Nenhum número selecionado';
-          document.getElementById('fNome').value = '';
-          document.getElementById('fWhatsapp').value = '';
-          document.getElementById('fEmail').value = '';
-          document.getElementById('fComprovante').value = '';
-        } else { throw new Error(); }
-      })
-      .catch(() => mostrarStatus('❌ Erro ao enviar. Tente novamente ou chame no WhatsApp (62) 98187-5192.', 'err'))
-      .finally(() => { btn.disabled = false; });
+    fetch(SCRIPT_URL, {
+      method: 'POST',
+      body:   JSON.stringify(payload)
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (data.result === 'success') {
+        mostrarStatus('🎉 Participação confirmada! Boa sorte no sorteio de 7 de maio!', 'ok');
+
+        // Marca os números como ocupados na grade imediatamente
+        selecionados.forEach(function(n) { marcarOcupado(n); });
+
+        // Atualiza contagem de disponíveis no texto
+        const vendidos    = grid.querySelectorAll('.ocupado').length;
+        const disponiveis = TOTAL_BILHETES - vendidos;
+        selTxt.textContent = '🎟️ ' + disponiveis + ' disponível(is)  ·  ' + vendidos + ' vendido(s)';
+
+        // Limpa formulário
+        selecionados = [];
+        document.getElementById('fNome').value        = '';
+        document.getElementById('fWhatsapp').value    = '';
+        document.getElementById('fEmail').value       = '';
+        document.getElementById('fComprovante').value = '';
+      } else {
+        throw new Error('result != success');
+      }
+    })
+    .catch(function() {
+      mostrarStatus('❌ Erro ao enviar. Tente novamente ou chame no WhatsApp (62) 98187-5192.', 'err');
+    })
+    .finally(function() {
+      btn.disabled = false;
+    });
   };
+
+  reader.onerror = function() {
+    mostrarStatus('❌ Erro ao ler o arquivo. Tente outro formato (JPG ou PNG).', 'err');
+    btn.disabled = false;
+  };
+
   reader.readAsDataURL(arquivo);
 }
 
 function mostrarStatus(texto, tipo) {
   const el = document.getElementById('statusMsg');
   el.textContent = texto;
-  el.className = 'status-msg ' + (tipo === 'ok' ? 'status-ok' : tipo === 'err' ? 'status-err' : 'status-load');
+  el.className   = 'status-msg ' + (
+    tipo === 'ok'   ? 'status-ok'   :
+    tipo === 'err'  ? 'status-err'  : 'status-load'
+  );
 }
 
-// ─────────────────────────────────────────
-// CONTADOR REGRESSIVO — 07/05/2026 às 20h
-// ─────────────────────────────────────────
+// ═══════════════════════════════════════════════════════
+// 6. CONTADOR REGRESSIVO
+// ═══════════════════════════════════════════════════════
 function atualizarContador() {
-  const alvo = new Date('2026-05-07T20:00:00');
-  const diff  = alvo - new Date();
+  const diff = DATA_SORTEIO - new Date();
   if (diff <= 0) {
-    ['cntDias','cntHoras','cntMin','cntSec'].forEach(id => document.getElementById(id).textContent = '00');
+    ['cntDias','cntHoras','cntMin','cntSec'].forEach(function(id) {
+      document.getElementById(id).textContent = '00';
+    });
     return;
   }
-  document.getElementById('cntDias').textContent  = String(Math.floor(diff/86400000)).padStart(2,'0');
-  document.getElementById('cntHoras').textContent = String(Math.floor(diff%86400000/3600000)).padStart(2,'0');
-  document.getElementById('cntMin').textContent   = String(Math.floor(diff%3600000/60000)).padStart(2,'0');
-  document.getElementById('cntSec').textContent   = String(Math.floor(diff%60000/1000)).padStart(2,'0');
+  document.getElementById('cntDias').textContent  = String(Math.floor(diff / 86400000)).padStart(2,'0');
+  document.getElementById('cntHoras').textContent = String(Math.floor(diff % 86400000 / 3600000)).padStart(2,'0');
+  document.getElementById('cntMin').textContent   = String(Math.floor(diff % 3600000  / 60000)).padStart(2,'0');
+  document.getElementById('cntSec').textContent   = String(Math.floor(diff % 60000   / 1000)).padStart(2,'0');
 }
 atualizarContador();
 setInterval(atualizarContador, 1000);
 
-// ─────────────────────────────────────────
-// PAINEL ADMIN — acesso por senha segura
-// ─────────────────────────────────────────
-let tentativas = 0;
-let bloqueadoAte = 0;
+// ═══════════════════════════════════════════════════════
+// 7. PAINEL ADMIN — senha com hash + bloqueio por tentativas
+// ═══════════════════════════════════════════════════════
+var tentativas   = 0;
+var bloqueadoAte = 0;
 
 function abrirPainelAdmin() {
   const painel = document.getElementById('painelAdmin');
-  painel.style.display = painel.style.display === 'none' ? 'block' : 'none';
-  document.getElementById('errSenha').textContent = '';
-  document.getElementById('senhaInput1').value = '';
+  const visivel = painel.style.display !== 'none';
+  painel.style.display = visivel ? 'none' : 'block';
+  if (!visivel) {
+    document.getElementById('errSenha').textContent  = '';
+    document.getElementById('senhaInput1').value     = '';
+  }
 }
 
 function fecharAdmin() {
-  document.getElementById('painelAdmin').style.display = 'none';
-  document.getElementById('loginAdmin').style.display = '';
+  document.getElementById('painelAdmin').style.display      = 'none';
+  document.getElementById('loginAdmin').style.display       = '';
   document.getElementById('controlesSorteio').style.display = 'none';
   tentativas = 0;
 }
 
 async function verificarSenha() {
   const agora = Date.now();
+  const errEl = document.getElementById('errSenha');
+
   if (agora < bloqueadoAte) {
     const seg = Math.ceil((bloqueadoAte - agora) / 1000);
-    document.getElementById('errSenha').textContent = `🔒 Muitas tentativas. Aguarde ${seg}s.`;
+    errEl.textContent = '🔒 Bloqueado. Aguarde ' + seg + 's.';
     return;
   }
 
-  const digitada = document.getElementById('senhaInput1').value;
+  const digitada    = document.getElementById('senhaInput1').value;
   const hashDigitada = await hashSenha(digitada);
 
   if (hashDigitada === SENHA_HASH) {
     tentativas = 0;
-    document.getElementById('loginAdmin').style.display = 'none';
+    document.getElementById('loginAdmin').style.display       = 'none';
     document.getElementById('controlesSorteio').style.display = 'block';
-    document.getElementById('errSenha').textContent = '';
+    errEl.textContent = '';
   } else {
     tentativas++;
-    const err = document.getElementById('errSenha');
-    if (tentativas >= 3) {
-      bloqueadoAte = Date.now() + 30000; // bloqueia 30 segundos
-      tentativas = 0;
-      err.textContent = '🚫 3 tentativas erradas. Bloqueado por 30 segundos.';
-    } else {
-      err.textContent = `❌ Senha incorreta. Tentativa ${tentativas}/3.`;
-    }
     document.getElementById('senhaInput1').value = '';
+    if (tentativas >= 3) {
+      bloqueadoAte  = Date.now() + 30000;
+      tentativas    = 0;
+      errEl.textContent = '🚫 3 tentativas erradas. Bloqueado por 30s.';
+    } else {
+      errEl.textContent = '❌ Senha incorreta. Tentativa ' + tentativas + '/3.';
+    }
   }
 }
 
-// Enter para confirmar senha
-document.getElementById('senhaInput1').addEventListener('keydown', e => {
+document.getElementById('senhaInput1').addEventListener('keydown', function(e) {
   if (e.key === 'Enter') verificarSenha();
 });
 
-// ─────────────────────────────────────────
-// SORTEIO
-// ─────────────────────────────────────────
+// ═══════════════════════════════════════════════════════
+// 8. SORTEIO
+// ═══════════════════════════════════════════════════════
 const premios = [
-  { lugar:'1° Lugar', nome:'🚲 Bicicleta 24 Marchas' },
-  { lugar:'2° Lugar', nome:'⌚ Smartwatch' },
-  { lugar:'3° Lugar', nome:'🎁 3° Prêmio Surpresa' }
+  { lugar: '1° Lugar', nome: '🚲 Bicicleta 24 Marchas' },
+  { lugar: '2° Lugar', nome: '⌚ Smartwatch'           },
+  { lugar: '3° Lugar', nome: '🎁 3° Prêmio Surpresa'  }
 ];
-let sorteioAtual = 0, ganhadores = [], rolando = false;
+var sorteioAtual = 0;
+var ganhadores   = [];
+var rolando      = false;
 
-const display    = document.getElementById('numeroDisplay');
-const btnSort    = document.getElementById('btnSortear');
-const instrucao  = document.getElementById('instrucao');
-const resBox     = document.getElementById('resultadoBox');
-const resNum     = document.getElementById('resNumero');
-const resPremio  = document.getElementById('resPremio');
-const histWrap   = document.getElementById('historicoWrap');
-const ganhadList = document.getElementById('ganhadoresList');
+var display    = document.getElementById('numeroDisplay');
+var btnSort    = document.getElementById('btnSortear');
+var instrucao  = document.getElementById('instrucao');
+var resBox     = document.getElementById('resultadoBox');
+var resNum     = document.getElementById('resNumero');
+var resPremio  = document.getElementById('resPremio');
+var histWrap   = document.getElementById('historicoWrap');
+var ganhadList = document.getElementById('ganhadoresList');
 
 function iniciarSorteio() {
   if (rolando || sorteioAtual >= premios.length) return;
-  rolando = true;
-  btnSort.disabled = true;
-  resBox.classList.remove('visivel');
+  rolando           = true;
+  btnSort.disabled  = true;
   instrucao.textContent = '🎲 Sorteando...';
   instrucao.style.color = 'var(--amarelo)';
+  resBox.classList.remove('visivel');
   display.classList.add('rolando');
 
-  let cnt = 0, total = 28 + Math.floor(Math.random()*18);
-  const iv = setInterval(() => {
-    display.textContent = String(Math.floor(Math.random()*TOTAL_BILHETES)+1).padStart(3,'0');
-    if (++cnt >= total) {
+  var cnt   = 0;
+  var total = 28 + Math.floor(Math.random() * 18);
+
+  var iv = setInterval(function() {
+    display.textContent = String(Math.floor(Math.random() * TOTAL_BILHETES) + 1).padStart(3, '0');
+    cnt++;
+    if (cnt >= total) {
       clearInterval(iv);
-      const sorteado = String(Math.floor(Math.random()*TOTAL_BILHETES)+1).padStart(3,'0');
+      var sorteado = String(Math.floor(Math.random() * TOTAL_BILHETES) + 1).padStart(3, '0');
       display.textContent = sorteado;
       display.classList.remove('rolando');
       finalizarSorteio(sorteado);
@@ -869,50 +973,47 @@ function iniciarSorteio() {
 }
 
 function finalizarSorteio(numero) {
-  const p = premios[sorteioAtual];
-  ganhadores.push({ numero, p });
-  resNum.textContent = numero;
-  resPremio.textContent = `${p.lugar} — ${p.nome} 🎉`;
+  var p = premios[sorteioAtual];
+  ganhadores.push({ numero: numero, p: p });
+
+  resNum.textContent    = numero;
+  resPremio.textContent = p.lugar + ' — ' + p.nome + ' 🎉';
   resBox.classList.add('visivel');
+
   histWrap.style.display = 'block';
-  const chip = document.createElement('div');
-  chip.className = 'ganhador-chip';
-  chip.textContent = `${p.lugar}: Nº ${numero}`;
+  var chip = document.createElement('div');
+  chip.className   = 'ganhador-chip';
+  chip.textContent = p.lugar + ': Nº ' + numero;
   ganhadList.appendChild(chip);
+
   sorteioAtual++;
   rolando = false;
-  explodir();
+  criarConfetes(50, true); // explosão de confetes
+
   if (sorteioAtual < premios.length) {
-    btnSort.disabled = false;
-    instrucao.textContent = `Próximo: ${premios[sorteioAtual].nome}`;
+    btnSort.disabled      = false;
+    instrucao.textContent = 'Próximo: ' + premios[sorteioAtual].nome;
   } else {
-    btnSort.textContent = '✅ Sorteio concluído!';
-    btnSort.disabled = true;
+    btnSort.textContent   = '✅ Sorteio concluído!';
+    btnSort.disabled      = true;
     instrucao.textContent = 'Todos os prêmios foram sorteados! 🏆';
+    instrucao.style.color = 'var(--amarelo)';
   }
 }
 
 function resetarSorteio() {
-  if (!confirm('Tem certeza que deseja recomeçar o sorteio? Os números sorteados serão apagados.')) return;
-  sorteioAtual = 0; ganhadores = []; rolando = false;
-  btnSort.disabled = false;
-  btnSort.textContent = '🎲 Sortear próximo prêmio';
+  if (!confirm('Tem certeza? Os números sorteados serão apagados.')) return;
+  sorteioAtual          = 0;
+  ganhadores            = [];
+  rolando               = false;
+  btnSort.disabled      = false;
+  btnSort.textContent   = '🎲 Sortear próximo prêmio';
   instrucao.textContent = 'Clique para sortear o próximo prêmio';
-  instrucao.style.color = '';
-  display.textContent = '—';
+  instrucao.style.color = 'rgba(255,255,255,.5)';
+  display.textContent   = '—';
   resBox.classList.remove('visivel');
   histWrap.style.display = 'none';
-  ganhadList.innerHTML = '';
-}
-
-function explodir() {
-  for (let i = 0; i < 50; i++) {
-    const c = document.createElement('div');
-    c.className = 'confete';
-    c.style.cssText = `left:${10+Math.random()*80}vw;top:30vh;width:${7+Math.random()*9}px;height:${9+Math.random()*11}px;background:${coresCf[Math.floor(Math.random()*coresCf.length)]};animation-duration:${1.5+Math.random()*2.5}s;animation-delay:0s;`;
-    wrapCf.appendChild(c);
-    setTimeout(() => c.remove(), 4500);
-  }
+  ganhadList.innerHTML   = '';
 }
 </script>
 </body>
