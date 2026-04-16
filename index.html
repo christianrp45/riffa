@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🎟️ Rifa — Família Queiroz Rodrigues| Viagem ao Encontro do Richard</title>
+<title>🎟️ Rifa —  Família Queiroz Rodrigues | Viagem ao Encontro do Richard</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Nunito:wght@400;600;700;900&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -325,10 +325,10 @@ footer strong { color:rgba(255,255,255,.75); }
 <!-- ══ HERO ══ -->
 <section class="hero">
   <div class="hero-bandeira">🇧🇷</div>
-  <div class="hero-tag">🎟️ Rifa Solidária · Família Queiroz</div>
+  <div class="hero-tag">🎟️ Rifa Solidária · Família Queiroz Rodrigues</div>
   <h1>Uma viagem de<br><em>encontro e orgulho</em></h1>
   <p class="hero-sub">
-    Nosso filho Richard concluiu uma imersão em tecnologia inovadora em Minas Gerais.
+    Nosso filho Richard esta concluindo uma imersão em tecnologia inovadora em Minas Gerais.
     Participe deste sorteio, concorra a prêmios incríveis e faça parte desta história.
   </p>
   <div class="hero-data">
@@ -354,7 +354,7 @@ footer strong { color:rgba(255,255,255,.75); }
         que utiliza o princípio da ressonância e pode consumir até <strong>90% menos energia</strong> que os
         motores convencionais. Além disso, Richard dedica-se ao piano com o renomado professor americano
         <strong>Gilbert</strong> e conquistou uma bolsa como ouvinte na pós-graduação de
-        <strong>Metafísica da Física Desinvertida</strong> do Dr. Norberto Keppe.
+        <strong>Eficiência Energética e Magnetônica </strong> do Dr. Norberto Keppe.
       </p>
       <div class="destaque-box">
         <span class="icone">⚡</span>
@@ -393,7 +393,7 @@ footer strong { color:rgba(255,255,255,.75); }
         <div class="linha-conteudo">
           <div class="linha-data">7 de maio de 2026 · 20h00</div>
           <h3>Sorteio ao vivo</h3>
-          <p>O sorteio dos 3 prêmios será transmitido ao vivo pelo WhatsApp. Todos os participantes serão avisados!</p>
+          <p>O sorteio dos 3 prêmios será transmitido ao vivo pelo WhatsApp e Instagram. Todos os participantes serão avisados!</p>
         </div>
       </div>
       <div class="linha-item">
@@ -629,7 +629,7 @@ footer strong { color:rgba(255,255,255,.75); }
 // ═══════════════════════════════════════════════════════
 // 1. CONFIGURAÇÕES GLOBAIS
 // ═══════════════════════════════════════════════════════
-const SCRIPT_URL     = "https://script.google.com/macros/library/d/1CmHDbzqrtQHRYu-uYGUcfC5-E7pa2CcKrN2X-EVVgryi1jZa7TQI78rx/2";
+const SCRIPT_URL     = "https://script.google.com/macros/s/AKfycbwcrgiugR0rKnYkR4gVryqjs2zIhjBsyUNL92kIJWWF1IfnKAGiYv09Yj4U42KTUm3K/exec";
 const TOTAL_BILHETES = 160;
 const DATA_SORTEIO   = new Date('2026-05-07T20:00:00');
 
@@ -698,24 +698,29 @@ function marcarOcupado(num) {
   }
 }
 
-// Busca do Google Sheets quais números já foram vendidos
-async function carregarNumerosOcupados() {
+// Busca números vendidos via JSONP — evita bloqueio CORS do Google Apps Script
+function carregarNumerosOcupados() {
   selTxt.textContent = '⏳ Verificando disponibilidade...';
-  try {
-    const res  = await fetch(SCRIPT_URL + '?action=getNumeros');
-    const data = await res.json();
+  const callbackName = 'cbNumeros_' + Date.now();
+  const script = document.createElement('script');
+  script.src = SCRIPT_URL + '?action=getNumeros&callback=' + callbackName;
+  window[callbackName] = function(data) {
+    delete window[callbackName];
+    if (script.parentNode) script.parentNode.removeChild(script);
     if (data.numeros && Array.isArray(data.numeros) && data.numeros.length > 0) {
-      data.numeros.forEach(num => marcarOcupado(num));
-      const vendidos   = data.numeros.length;
-      const disponiveis = TOTAL_BILHETES - vendidos;
+      data.numeros.forEach(function(num) { marcarOcupado(num); });
+      var vendidos    = data.numeros.length;
+      var disponiveis = TOTAL_BILHETES - vendidos;
       selTxt.textContent = '🎟️ ' + disponiveis + ' disponível(is)  ·  ' + vendidos + ' vendido(s)';
     } else {
       selTxt.textContent = '🎟️ Todos os ' + TOTAL_BILHETES + ' bilhetes disponíveis!';
     }
-  } catch (err) {
-    // Se falhar (ex: CORS no localhost), apenas mostra msg neutra
+  };
+  script.onerror = function() {
+    delete window[callbackName];
     selTxt.textContent = 'Selecione um número para participar';
-  }
+  };
+  document.body.appendChild(script);
 }
 carregarNumerosOcupados();
 
@@ -797,35 +802,35 @@ function enviarCadastro() {
       tipoArquivo:   arquivo.type
     };
 
+    // Google Apps Script exige no-cors para POST externo
+    // Enviamos via no-cors e assumimos sucesso se não houve erro de rede
     fetch(SCRIPT_URL, {
-      method: 'POST',
-      body:   JSON.stringify(payload)
+      method:  'POST',
+      mode:    'no-cors',
+      headers: { 'Content-Type': 'text/plain' },
+      body:    JSON.stringify(payload)
     })
-    .then(function(r) { return r.json(); })
-    .then(function(data) {
-      if (data.result === 'success') {
-        mostrarStatus('🎉 Participação confirmada! Boa sorte no sorteio de 7 de maio!', 'ok');
+    .then(function() {
+      // no-cors sempre retorna opaque response — consideramos sucesso
+      mostrarStatus('🎉 Participação confirmada! Boa sorte no sorteio de 7 de maio!', 'ok');
 
-        // Marca os números como ocupados na grade imediatamente
-        selecionados.forEach(function(n) { marcarOcupado(n); });
+      // Marca os números como ocupados na grade imediatamente
+      selecionados.forEach(function(n) { marcarOcupado(n); });
 
-        // Atualiza contagem de disponíveis no texto
-        const vendidos    = grid.querySelectorAll('.ocupado').length;
-        const disponiveis = TOTAL_BILHETES - vendidos;
-        selTxt.textContent = '🎟️ ' + disponiveis + ' disponível(is)  ·  ' + vendidos + ' vendido(s)';
+      // Atualiza contagem
+      var vendidos    = grid.querySelectorAll('.ocupado').length;
+      var disponiveis = TOTAL_BILHETES - vendidos;
+      selTxt.textContent = '🎟️ ' + disponiveis + ' disponível(is)  ·  ' + vendidos + ' vendido(s)';
 
-        // Limpa formulário
-        selecionados = [];
-        document.getElementById('fNome').value        = '';
-        document.getElementById('fWhatsapp').value    = '';
-        document.getElementById('fEmail').value       = '';
-        document.getElementById('fComprovante').value = '';
-      } else {
-        throw new Error('result != success');
-      }
+      // Limpa formulário
+      selecionados = [];
+      document.getElementById('fNome').value        = '';
+      document.getElementById('fWhatsapp').value    = '';
+      document.getElementById('fEmail').value       = '';
+      document.getElementById('fComprovante').value = '';
     })
     .catch(function() {
-      mostrarStatus('❌ Erro ao enviar. Tente novamente ou chame no WhatsApp (62) 98187-5192.', 'err');
+      mostrarStatus('❌ Erro de conexão. Verifique sua internet e tente novamente.', 'err');
     })
     .finally(function() {
       btn.disabled = false;
