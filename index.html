@@ -319,10 +319,8 @@ footer strong { color:rgba(255,255,255,.75); }
 </head>
 <body>
 
-<!-- CONFETES -->
 <div class="confetes" id="confetes"></div>
 
-<!-- ══ HERO ══ -->
 <section class="hero">
   <div class="hero-bandeira">🇧🇷</div>
   <div class="hero-tag">🎟️ Rifa Solidária · Família Queiroz Rodrigues</div>
@@ -338,7 +336,6 @@ footer strong { color:rgba(255,255,255,.75); }
   </div>
 </section>
 
-<!-- ══ HISTÓRIA ══ -->
 <section class="historia">
   <div class="container">
     <span class="secao-label">A Nossa História</span>
@@ -374,7 +371,6 @@ footer strong { color:rgba(255,255,255,.75); }
   </div>
 </section>
 
-<!-- ══ LINHA DO TEMPO ══ -->
 <section class="timeline">
   <div class="container">
     <span class="secao-label">Calendário</span>
@@ -385,7 +381,7 @@ footer strong { color:rgba(255,255,255,.75); }
         <div class="linha-conteudo">
           <div class="linha-data">Agora até 7 de maio de 2026</div>
           <h3>Venda dos bilhetes</h3>
-          <p>160 bilhetes numerados de 001 a 160, a R$ 25 cada. Pague via Pix e cadastre-se abaixo com o comprovante.</p>
+          <p>160 bilhetes numerados de 001 a 160, a R$ 25 cada. Pague via Pix e cadastre-se abaixo (comprovante opcional).</p>
         </div>
       </div>
       <div class="linha-item">
@@ -416,7 +412,6 @@ footer strong { color:rgba(255,255,255,.75); }
   </div>
 </section>
 
-<!-- ══ PRÊMIOS ══ -->
 <section class="premios">
   <div class="container">
     <span class="secao-label">Prêmios</span>
@@ -445,7 +440,6 @@ footer strong { color:rgba(255,255,255,.75); }
   </div>
 </section>
 
-<!-- ══ COMO PARTICIPAR ══ -->
 <section class="como">
   <div class="container">
     <span class="secao-label">Participar é simples</span>
@@ -464,7 +458,7 @@ footer strong { color:rgba(255,255,255,.75); }
       <div class="passo">
         <div class="passo-num">3</div>
         <h3>Cadastre-se</h3>
-        <p>Preencha o formulário com seu nome, contato, número escolhido e <em>anexe o comprovante</em>.</p>
+        <p>Preencha o formulário com seu nome, contato, número escolhido. <em>O comprovante não é mais obrigatório!</em></p>
       </div>
       <div class="passo">
         <div class="passo-num">4</div>
@@ -475,7 +469,6 @@ footer strong { color:rgba(255,255,255,.75); }
   </div>
 </section>
 
-<!-- ══ PIX ══ -->
 <section class="pix-section">
   <div class="container">
     <span class="secao-label">Pagamento</span>
@@ -493,18 +486,17 @@ footer strong { color:rgba(255,255,255,.75); }
         <div class="pix-chave" id="chavePix">(62) 98187-5192</div>
         <div class="pix-nome">Richard Queiroz</div>
         <button class="btn-copiar" onclick="copiarPix()">📋 Copiar chave Pix</button>
-        <div class="pix-aviso" id="avisoCopiado">Após pagar, cadastre-se no formulário abaixo com o comprovante.</div>
+        <div class="pix-aviso" id="avisoCopiado">Após pagar, cadastre-se no formulário abaixo.</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══ FORMULÁRIO DE CADASTRO ══ -->
 <section class="cadastro">
   <div class="container">
     <span class="secao-label">📝 Cadastro do Participante</span>
     <h2>Confirme sua participação</h2>
-    <p class="subtxt">Preencha os dados abaixo após realizar o Pix. Seu bilhete só é confirmado com o comprovante.</p>
+    <p class="subtxt">Preencha os dados abaixo após realizar o Pix. O envio do comprovante pelo site agora é opcional.</p>
 
     <div class="form-card">
       <div class="form-grid">
@@ -521,18 +513,16 @@ footer strong { color:rgba(255,255,255,.75); }
           <input type="email" id="fEmail" placeholder="seu@email.com" required>
         </div>
 
-        <!-- SELETOR DE NÚMEROS -->
         <div class="form-group full">
           <label>Número(s) escolhido(s) — clique para selecionar</label>
           <div class="numero-grid" id="numeroGrid"></div>
           <div class="selecionados-txt" id="selecionadosTxt">Nenhum número selecionado</div>
         </div>
 
-        <!-- UPLOAD COMPROVANTE -->
         <div class="form-group full">
-          <label>Comprovante do Pix (foto ou print)</label>
-          <input type="file" id="fComprovante" accept="image/*,application/pdf" required>
-          <div class="upload-hint">📎 Aceito: JPG, PNG ou PDF · Máx. 5MB</div>
+          <label>Comprovante do Pix (Opcional - foto ou print)</label>
+          <input type="file" id="fComprovante" accept="image/*,application/pdf">
+          <div class="upload-hint">📎 Aceito: JPG, PNG ou PDF · Máx. 5MB. <strong>Não é obrigatório.</strong></div>
         </div>
       </div>
 
@@ -544,7 +534,6 @@ footer strong { color:rgba(255,255,255,.75); }
   </div>
 </section>
 
-<!-- ══ CONTADOR ══ -->
 <section class="contador">
   <div class="container">
     <span class="secao-label">Contagem Regressiva</span>
@@ -559,14 +548,12 @@ footer strong { color:rgba(255,255,255,.75); }
   </div>
 </section>
 
-<!-- ══ SORTEIO ══ -->
 <section class="sorteio">
   <div class="container">
     <span class="secao-label">Sorteio Ao Vivo</span>
     <h2>Acompanhe o Sorteio</h2>
     <p class="subtxt">O sorteio será realizado ao vivo no dia 7 de maio às 20h · Exclusivo para o idealizador</p>
 
-    <!-- PAINEL PÚBLICO: só exibe quando sorteio foi liberado -->
     <div id="painelPublico">
       <div class="numero-display" id="numeroDisplay">—</div>
       <div class="sorteio-instrucao" id="instrucao" style="color:rgba(255,255,255,.5);font-size:.9rem;margin-top:10px;">Aguardando início do sorteio pelo idealizador...</div>
@@ -585,14 +572,12 @@ footer strong { color:rgba(255,255,255,.75); }
       </div>
     </div>
 
-    <!-- BOTÃO SECRETO: pequeno, discreto, no rodapé da seção -->
     <div style="margin-top:48px;position:relative;">
       <button onclick="abrirPainelAdmin()" style="background:transparent;border:none;cursor:pointer;opacity:0.15;font-size:.65rem;color:#fff;letter-spacing:2px;padding:8px 16px;transition:opacity .3s;" onmouseover="this.style.opacity='.4'" onmouseout="this.style.opacity='.15'">
         ⚙
       </button>
     </div>
 
-    <!-- PAINEL ADMIN: oculto por padrão -->
     <div id="painelAdmin" style="display:none;margin-top:24px;animation:fadeUp .4s both;">
       <div style="background:rgba(255,255,255,.06);border:2px solid rgba(255,223,0,.3);border-radius:20px;padding:32px 28px;max-width:420px;margin:0 auto;">
         <div style="color:var(--amarelo);font-weight:900;font-size:.75rem;letter-spacing:3px;text-transform:uppercase;margin-bottom:18px;">🔐 Painel do Idealizador</div>
@@ -616,15 +601,12 @@ footer strong { color:rgba(255,255,255,.75); }
   </div>
 </section>
 
-<!-- ══ FOOTER ══ -->
 <footer>
   <strong>Rifa da Família Queiroz</strong> · Sorteio em 7 de maio de 2026 às 20h<br>
   Dúvidas? Fale pelo WhatsApp: <span>(62) 98187-5192</span> · Richard Queiroz<br>
   <span>Obrigado por fazer parte desta história 💚💛</span>
 </footer>
 
-
-<!-- ══ SCRIPTS ══ -->
 <script>
 // ═══════════════════════════════════════════════════════
 // 1. CONFIGURAÇÕES GLOBAIS
@@ -634,7 +616,6 @@ const TOTAL_BILHETES = 160;
 const DATA_SORTEIO   = new Date('2026-05-07T20:00:00');
 
 // Senha protegida por hash SHA-256 — nunca visível no código
-// Senha real: Queiroz@Richard2026#Maio
 const SENHA_HASH = "a3f8d2c1e7b94056af12309dc8e6571b3a049f28e5c7d16082b3945e7f0a1c2d";
 
 async function hashSenha(str) {
@@ -654,7 +635,7 @@ function criarConfetes(qtd, randomLeft) {
     c.className = 'confete';
     const left = randomLeft ? (10 + Math.random() * 80) : (Math.random() * 100);
     c.style.cssText = [
-      'left:'              + left + 'vw',
+      'left:'            + left + 'vw',
       'width:'             + (7  + Math.random() * 8)  + 'px',
       'height:'            + (10 + Math.random() * 10) + 'px',
       'background:'        + coresCf[Math.floor(Math.random() * coresCf.length)],
@@ -667,16 +648,15 @@ function criarConfetes(qtd, randomLeft) {
     if (randomLeft) setTimeout(() => c.remove(), 4500);
   }
 }
-criarConfetes(55, false); // confetes de fundo ao carregar a página
+criarConfetes(55, false); 
 
 // ═══════════════════════════════════════════════════════
-// 3. GRADE DE NÚMEROS — cria botões e carrega ocupados
+// 3. GRADE DE NÚMEROS
 // ═══════════════════════════════════════════════════════
 let selecionados = [];
 const grid   = document.getElementById('numeroGrid');
 const selTxt = document.getElementById('selecionadosTxt');
 
-// Cria os 160 botões
 for (let n = 1; n <= TOTAL_BILHETES; n++) {
   const btn = document.createElement('button');
   btn.type        = 'button';
@@ -687,7 +667,6 @@ for (let n = 1; n <= TOTAL_BILHETES; n++) {
   grid.appendChild(btn);
 }
 
-// Marca um número como ocupado na grade
 function marcarOcupado(num) {
   const n   = parseInt(num, 10);
   const btn = grid.querySelector('[data-num="' + n + '"]');
@@ -698,7 +677,6 @@ function marcarOcupado(num) {
   }
 }
 
-// Busca números vendidos via JSONP — evita bloqueio CORS do Google Apps Script
 function carregarNumerosOcupados() {
   selTxt.textContent = '⏳ Verificando disponibilidade...';
   const callbackName = 'cbNumeros_' + Date.now();
@@ -724,7 +702,6 @@ function carregarNumerosOcupados() {
 }
 carregarNumerosOcupados();
 
-// Selecionar / desselecionar número
 function toggleNumero(btn, n) {
   if (btn.classList.contains('ocupado')) return;
   if (btn.classList.contains('selecionado')) {
@@ -750,7 +727,7 @@ function copiarPix() {
     av.textContent = '✅ Chave copiada! Cole no app do seu banco.';
     av.style.color = '#009c3b';
     setTimeout(function() {
-      av.textContent = 'Após pagar, cadastre-se no formulário abaixo com o comprovante.';
+      av.textContent = 'Após pagar, cadastre-se no formulário abaixo.';
       av.style.color = '';
     }, 3500);
   });
@@ -775,11 +752,8 @@ function enviarCadastro() {
     mostrarStatus('⚠️ Selecione pelo menos um número na grade acima.', 'err');
     return;
   }
-  if (!arquivo) {
-    mostrarStatus('⚠️ Anexe o comprovante do Pix.', 'err');
-    return;
-  }
-  if (arquivo.size > 5 * 1024 * 1024) {
+  // Só valida o tamanho do arquivo se a pessoa escolheu anexar um
+  if (arquivo && arquivo.size > 5 * 1024 * 1024) {
     mostrarStatus('⚠️ Arquivo muito grande. Máximo permitido: 5MB.', 'err');
     return;
   }
@@ -787,23 +761,17 @@ function enviarCadastro() {
   btn.disabled = true;
   mostrarStatus('⏳ Enviando seus dados... aguarde.', 'load');
 
-  // Converte comprovante para base64 e envia
-  const reader = new FileReader();
-  reader.onload = function() {
-    const base64 = reader.result.split(',')[1];
-
-    // Monta o payload — numeros como ARRAY (cada item = uma linha na planilha)
+  // Função interna que envia os dados já com o arquivo processado (ou em branco)
+  const processarEnvio = function(base64, tipo) {
     const payload = {
       nome:          nome,
       whatsapp:      whatsapp,
       email:         email,
       numeros:       selecionados.map(function(x) { return String(x).padStart(3,'0'); }),
       arquivoBase64: base64,
-      tipoArquivo:   arquivo.type
+      tipoArquivo:   tipo
     };
 
-    // Google Apps Script exige no-cors para POST externo
-    // Enviamos via no-cors e assumimos sucesso se não houve erro de rede
     fetch(SCRIPT_URL, {
       method:  'POST',
       mode:    'no-cors',
@@ -811,13 +779,9 @@ function enviarCadastro() {
       body:    JSON.stringify(payload)
     })
     .then(function() {
-      // no-cors sempre retorna opaque response — consideramos sucesso
       mostrarStatus('🎉 Participação confirmada! Boa sorte no sorteio de 7 de maio!', 'ok');
-
-      // Marca os números como ocupados na grade imediatamente
+      
       selecionados.forEach(function(n) { marcarOcupado(n); });
-
-      // Atualiza contagem
       var vendidos    = grid.querySelectorAll('.ocupado').length;
       var disponiveis = TOTAL_BILHETES - vendidos;
       selTxt.textContent = '🎟️ ' + disponiveis + ' disponível(is)  ·  ' + vendidos + ' vendido(s)';
@@ -837,12 +801,23 @@ function enviarCadastro() {
     });
   };
 
-  reader.onerror = function() {
-    mostrarStatus('❌ Erro ao ler o arquivo. Tente outro formato (JPG ou PNG).', 'err');
-    btn.disabled = false;
-  };
-
-  reader.readAsDataURL(arquivo);
+  // Se tem arquivo, converte. Se não tem, envia uma imagem vazia 1x1 invisível
+  // Isso evita que o Google Apps Script quebre pedindo arquivo obrigatório.
+  if (arquivo) {
+    const reader = new FileReader();
+    reader.onload = function() {
+      processarEnvio(reader.result.split(',')[1], arquivo.type);
+    };
+    reader.onerror = function() {
+      mostrarStatus('❌ Erro ao ler o arquivo. Tente outro formato.', 'err');
+      btn.disabled = false;
+    };
+    reader.readAsDataURL(arquivo);
+  } else {
+    // Imagem transparente 1x1 pixel em base64 para o Google não reclamar
+    const base64Vazio = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=";
+    processarEnvio(base64Vazio, 'image/png');
+  }
 }
 
 function mostrarStatus(texto, tipo) {
@@ -874,7 +849,7 @@ atualizarContador();
 setInterval(atualizarContador, 1000);
 
 // ═══════════════════════════════════════════════════════
-// 7. PAINEL ADMIN — senha com hash + bloqueio por tentativas
+// 7. PAINEL ADMIN
 // ═══════════════════════════════════════════════════════
 var tentativas   = 0;
 var bloqueadoAte = 0;
@@ -936,7 +911,7 @@ document.getElementById('senhaInput1').addEventListener('keydown', function(e) {
 // ═══════════════════════════════════════════════════════
 const premios = [
   { lugar: '1° Lugar', nome: '🚲 Bicicleta 24 Marchas' },
-  { lugar: '2° Lugar', nome: '⌚ Smartwatch'           },
+  { lugar: '2° Lugar', nome: '⌚ Smartwatch'            },
   { lugar: '3° Lugar', nome: '🎁 3° Prêmio Surpresa'  }
 ];
 var sorteioAtual = 0;
@@ -993,7 +968,7 @@ function finalizarSorteio(numero) {
 
   sorteioAtual++;
   rolando = false;
-  criarConfetes(50, true); // explosão de confetes
+  criarConfetes(50, true); 
 
   if (sorteioAtual < premios.length) {
     btnSort.disabled      = false;
