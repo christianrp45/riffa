@@ -1,3 +1,11 @@
+Pode ficar totalmente tranquilo! **Você não vai perder nenhum número já escolhido ou registrado.** Como nós conectamos o seu site com a sua planilha do Google Sheets, todos os dados das pessoas que já compraram estão salvos lá no Google, e não no arquivo do site. Quando você atualizar essa página, o código vai automaticamente ler a sua planilha e bloquear os números que já foram vendidos (mesmo com a adição dos 10 novos números no final da lista).
+Fiz todas as alterações solicitadas:
+ * A data do sorteio foi alterada de 7 de maio para **13 de maio**.
+ * O total de bilhetes subiu de 160 para **170**.
+ * O contador regressivo foi atualizado para a nova data.
+*Nota de atenção: Como o sorteio foi para o dia 13/05, o texto informando que a viagem de partida será no dia 09/05 acabou ficando antes do sorteio. Eu mantive o texto da viagem no dia 09/05 para respeitar seu código original, mas vale a pena dar uma lida e alterar essa parte no futuro se a viagem também tiver sido adiada, ok?*
+Aqui está o código completo e atualizado. Basta substituir no seu GitHub:
+```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -332,7 +340,7 @@ footer strong { color:rgba(255,255,255,.75); }
   <div class="hero-data">
     <div class="data-chip">🗓️ Viagem: 9 a 17 de maio de 2026</div>
     <div class="data-chip">🎯 Meta: R$ 4.000</div>
-    <div class="data-chip">🎟️ 160 bilhetes · R$ 25 cada</div>
+    <div class="data-chip">🎟️ 170 bilhetes · R$ 25 cada</div>
   </div>
 </section>
 
@@ -379,15 +387,15 @@ footer strong { color:rgba(255,255,255,.75); }
       <div class="linha-item">
         <div class="linha-dot">🎟️</div>
         <div class="linha-conteudo">
-          <div class="linha-data">Agora até 7 de maio de 2026</div>
+          <div class="linha-data">Agora até 13 de maio de 2026</div>
           <h3>Venda dos bilhetes</h3>
-          <p>160 bilhetes numerados de 001 a 160, a R$ 25 cada. Pague via Pix e cadastre-se abaixo (comprovante opcional).</p>
+          <p>170 bilhetes numerados de 001 a 170, a R$ 25 cada. Pague via Pix e cadastre-se abaixo (comprovante opcional).</p>
         </div>
       </div>
       <div class="linha-item">
         <div class="linha-dot">🎲</div>
         <div class="linha-conteudo">
-          <div class="linha-data">7 de maio de 2026 · 20h00</div>
+          <div class="linha-data">13 de maio de 2026 · 20h00</div>
           <h3>Sorteio ao vivo</h3>
           <p>O sorteio dos 3 prêmios será transmitido ao vivo pelo WhatsApp e Instagram. Todos os participantes serão avisados!</p>
         </div>
@@ -448,7 +456,7 @@ footer strong { color:rgba(255,255,255,.75); }
       <div class="passo">
         <div class="passo-num">1</div>
         <h3>Escolha seu número</h3>
-        <p>Escolha um número de <em>001 a 160</em>. Pode comprar mais de um para aumentar suas chances!</p>
+        <p>Escolha um número de <em>001 a 170</em>. Pode comprar mais de um para aumentar suas chances!</p>
       </div>
       <div class="passo">
         <div class="passo-num">2</div>
@@ -463,7 +471,7 @@ footer strong { color:rgba(255,255,255,.75); }
       <div class="passo">
         <div class="passo-num">4</div>
         <h3>Aguarde o sorteio</h3>
-        <p>Sorteio ao vivo em <em>7 de maio às 20h</em>. Avisaremos você pelo WhatsApp!</p>
+        <p>Sorteio ao vivo em <em>13 de maio às 20h</em>. Avisaremos você pelo WhatsApp!</p>
       </div>
     </div>
   </div>
@@ -544,7 +552,7 @@ footer strong { color:rgba(255,255,255,.75); }
       <div class="cnt-box"><span class="cnt-num" id="cntMin">--</span><span class="cnt-label">Minutos</span></div>
       <div class="cnt-box"><span class="cnt-num" id="cntSec">--</span><span class="cnt-label">Segundos</span></div>
     </div>
-    <div class="data-sorteio-txt">📅 Sorteio: 7 de maio de 2026, às 20h00</div>
+    <div class="data-sorteio-txt">📅 Sorteio: 13 de maio de 2026, às 20h00</div>
   </div>
 </section>
 
@@ -552,7 +560,7 @@ footer strong { color:rgba(255,255,255,.75); }
   <div class="container">
     <span class="secao-label">Sorteio Ao Vivo</span>
     <h2>Acompanhe o Sorteio</h2>
-    <p class="subtxt">O sorteio será realizado ao vivo no dia 7 de maio às 20h · Exclusivo para o idealizador</p>
+    <p class="subtxt">O sorteio será realizado ao vivo no dia 13 de maio às 20h · Exclusivo para o idealizador</p>
 
     <div id="painelPublico">
       <div class="numero-display" id="numeroDisplay">—</div>
@@ -602,7 +610,7 @@ footer strong { color:rgba(255,255,255,.75); }
 </section>
 
 <footer>
-  <strong>Rifa da Família Queiroz</strong> · Sorteio em 7 de maio de 2026 às 20h<br>
+  <strong>Rifa da Família Queiroz</strong> · Sorteio em 13 de maio de 2026 às 20h<br>
   Dúvidas? Fale pelo WhatsApp: <span>(62) 98187-5192</span> · Richard Queiroz<br>
   <span>Obrigado por fazer parte desta história 💚💛</span>
 </footer>
@@ -612,8 +620,8 @@ footer strong { color:rgba(255,255,255,.75); }
 // 1. CONFIGURAÇÕES GLOBAIS
 // ═══════════════════════════════════════════════════════
 const SCRIPT_URL     = "https://script.google.com/macros/s/AKfycbwcrgiugR0rKnYkR4gVryqjs2zIhjBsyUNL92kIJWWF1IfnKAGiYv09Yj4U42KTUm3K/exec";
-const TOTAL_BILHETES = 160;
-const DATA_SORTEIO   = new Date('2026-05-07T20:00:00');
+const TOTAL_BILHETES = 170;
+const DATA_SORTEIO   = new Date('2026-05-13T20:00:00');
 
 // Senha protegida por hash SHA-256 — nunca visível no código
 const SENHA_HASH = "a3f8d2c1e7b94056af12309dc8e6571b3a049f28e5c7d16082b3945e7f0a1c2d";
@@ -779,7 +787,7 @@ function enviarCadastro() {
       body:    JSON.stringify(payload)
     })
     .then(function() {
-      mostrarStatus('🎉 Participação confirmada! Boa sorte no sorteio de 7 de maio!', 'ok');
+      mostrarStatus('🎉 Participação confirmada! Boa sorte no sorteio de 13 de maio!', 'ok');
       
       selecionados.forEach(function(n) { marcarOcupado(n); });
       var vendidos    = grid.querySelectorAll('.ocupado').length;
@@ -802,7 +810,6 @@ function enviarCadastro() {
   };
 
   // Se tem arquivo, converte. Se não tem, envia uma imagem vazia 1x1 invisível
-  // Isso evita que o Google Apps Script quebre pedindo arquivo obrigatório.
   if (arquivo) {
     const reader = new FileReader();
     reader.onload = function() {
@@ -814,7 +821,7 @@ function enviarCadastro() {
     };
     reader.readAsDataURL(arquivo);
   } else {
-    // Imagem transparente 1x1 pixel em base64 para o Google não reclamar
+    // Imagem transparente 1x1 pixel em base64
     const base64Vazio = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=";
     processarEnvio(base64Vazio, 'image/png');
   }
@@ -998,3 +1005,5 @@ function resetarSorteio() {
 </script>
 </body>
 </html>
+
+```
